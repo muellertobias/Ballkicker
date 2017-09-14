@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+  <Model commandLine="" date="">
+    <Option name="use_types" value="#off#"/>
+    <Option name="imported_root_package" value="#off#"/>
+    <Option name="root_package" value="#off#"/>
+    <Option name="xml_basename" value="kcg_xml_filter_out.scade"/>
+    <Option name="state_vector" value="#off#"/>
+    <Option name="static" value="#off#"/>
+    <Option name="separate_io_all" value="#off#"/>
+    <Option name="no_separate_io" value="#off#"/>
+    <Option name="separate_io" value="#off#"/>
+    <Option name="warn_error" value="#off#"/>
+    <Option name="short_circuit" value="#off#"/>
+    <Option name="wrap_c_ops" value="#off#"/>
+    <Option name="input_file" value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libverif/libverif.xscade"/>
+    <Option name="input_file" value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libpwlinear/lut.xscade"/>
+    <Option name="input_file" value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libpwlinear/pwlinear.xscade"/>
+    <Option name="input_file" value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libmathext/mathext.xscade"/>
+    <Option name="input_file" value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libmath/math.xscade"/>
+    <Option name="input_file" value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libmath/vect.xscade"/>
+    <Option name="input_file" value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/liblinear/filters.xscade"/>
+    <Option name="input_file" value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/liblinear/linear.xscade"/>
+    <Option name="input_file" value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libdigital/TruthTables.xscade"/>
+    <Option name="input_file" value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libdigital/digital.xscade"/>
+    <Option name="input_file" value="D:/Development/Scadet/RobotTar/Operator1.xscade"/>
+    <Option name="probes" value="#off#"/>
+    <Option name="debug" value="#off#"/>
+    <Option name="no_observe" value="#off#"/>
+    <Option name="observe" value="#off#"/>
+    <Option name="user_config" value="./user_macros.h"/>
+    <Option name="input_threshold" value="#off#"/>
+    <Option name="header" value="#off#"/>
+    <Option name="significance_length" value="31"/>
+    <Option name="name_length" value="200"/>
+    <Option name="globals_prefix" value="#off#"/>
+    <Option name="keep_asserts" value="#off#"/>
+    <Option name="global_root_context" value="#off#"/>
+    <Option name="expall" value="#off#"/>
+    <Option name="noexp" value="#off#"/>
+    <Option name="exp" value="#off#"/>
+    <Option name="target_dir" value="D:/Development/Scadet/RobotTar/KCG"/>
+    <Option name="target" value="C"/>
+    <Option name="root" value="StateMachine"/>
+    <Option name="auth" value="#off#"/>
+    <RootNode headerFile="StateMachine.h" scadeName="StateMachine" targetCycleFct="StateMachine" targetInitFct="StateMachine_reset" targetInitializationFct="StateMachine_init">
+      <Input inCtx="true" scadeName="AverageSonar" scadeType="int16" targetName="AverageSonar" targetType="kcg_int16"/>
+      <Input inCtx="true" scadeName="Start" scadeType="bool" targetName="Start" targetType="kcg_bool"/>
+      <Output inCtx="true" scadeName="CountValue" scadeType="uint32" targetName="CountValue" targetType="kcg_uint32"/>
+      <Output inCtx="true" scadeName="SpeedValue" scadeType="int16" targetName="SpeedValue" targetType="kcg_int16"/>
+      <Signal scadeName="StartSignal" targetName="Start"/>
+      <Automaton scadeName="CountSM" targetStatesType="SSM_ST_CountSM" targetTransitionsType="SSM_TR_CountSM">
+        <State scadeName="Wait" targetName="SSM_st_Wait_CountSM">
+          <Fork priority="1">
+            <Condition/>
+            <Transition kind="strong" scadeDest="Count" targetName="SSM_TR_Wait_Count_1_Wait_CountSM"/>
+            <Action>
+              <Last/>
+            </Action>
+          </Fork>
+        </State>
+        <State scadeName="Count" targetName="SSM_st_Count_CountSM">
+          <Fork priority="1">
+            <Condition/>
+            <Transition kind="strong" scadeDest="Wait" targetName="SSM_TR_Count_Wait_1_Count_CountSM"/>
+          </Fork>
+        </State>
+        <NextState inCtx="true" mem="true" targetName="CountSM_state_nxt"/>
+      </Automaton>
+      <NodeInlining instName="1" scadeName="math::InRangeOutIn">
+        <Input inCtx="true" scadeName="IROI_Input" scadeType="int16" targetName="AverageSonar" targetType="kcg_int16"/>
+        <Assume scadeName="A1" targetName=""/>
+      </NodeInlining>
+      <NodeInlining instName="1" scadeName="math::InRangeInOut">
+        <Input inCtx="true" scadeName="IRIO_Input" scadeType="int16" targetName="AverageSonar" targetType="kcg_int16"/>
+        <Assume scadeName="A1" targetName=""/>
+      </NodeInlining>
+      <Automaton scadeName="SM2" targetStatesType="SSM_ST_SM2" targetTransitionsType="SSM_TR_SM2">
+        <State scadeName="Drive" targetName="SSM_st_Drive_SM2">
+          <Fork priority="1">
+            <Condition/>
+            <Transition kind="strong" scadeDest="Init" targetName="SSM_TR_Drive_Init_1_Drive_SM2"/>
+          </Fork>
+        </State>
+        <State scadeName="Init" targetName="SSM_st_Init_SM2">
+          <Fork priority="1">
+            <Condition/>
+            <Transition kind="strong" scadeDest="Drive" targetName="SSM_TR_Init_Drive_1_Init_SM2"/>
+          </Fork>
+        </State>
+        <NextState inCtx="true" mem="true" targetName="SM2_state_nxt"/>
+      </Automaton>
+      <Memory inCtx="true" targetName="CountValue" targetType="kcg_uint32"/>
+      <Memory inCtx="true" targetName="Speed" targetType="kcg_int16"/>
+      <Memory inCtx="true" targetName="Counting" targetType="kcg_uint32"/>
+      <OutCtxType targetName="outC_StateMachine"/>
+      <InCtxType targetName="inC_StateMachine"/>
+    </RootNode>
+    <Package scadeName="digital"/>
+    <Package scadeName="truthtables">
+      <EnumType scadeName="TruthTableValues" targetName="TruthTableValues_truthtables">
+        <EnumVal scadeName="T" targetName="T_truthtables"/>
+        <EnumVal scadeName="F" targetName="F_truthtables"/>
+        <EnumVal scadeName="X" targetName="X_truthtables"/>
+      </EnumType>
+    </Package>
+    <Package scadeName="linear"/>
+    <Package scadeName="filters"/>
+    <Package scadeName="vect"/>
+    <Package scadeName="math">
+      <ExpNode scadeName="InRangeInOut"/>
+      <ExpNode scadeName="InRangeOutIn"/>
+    </Package>
+    <Package scadeName="mathext">
+      <Package scadeName="mathextimpl"/>
+    </Package>
+    <Package scadeName="pwlinear"/>
+    <Package scadeName="lut"/>
+    <Package scadeName="verif"/>
+    <PredefType scadeName="int8" targetName="kcg_int8"/>
+    <PredefType scadeName="int16" targetName="kcg_int16"/>
+    <PredefType scadeName="int32" targetName="kcg_int32"/>
+    <PredefType scadeName="int64" targetName="kcg_int64"/>
+    <PredefType scadeName="uint8" targetName="kcg_uint8"/>
+    <PredefType scadeName="uint16" targetName="kcg_uint16"/>
+    <PredefType scadeName="uint32" targetName="kcg_uint32"/>
+    <PredefType scadeName="uint64" targetName="kcg_uint64"/>
+    <PredefType scadeName="size" targetName="kcg_size"/>
+    <PredefType scadeName="float32" targetName="kcg_float32"/>
+    <PredefType scadeName="float64" targetName="kcg_float64"/>
+    <PredefType scadeName="bool" targetName="kcg_bool"/>
+    <PredefType scadeName="char" targetName="kcg_char"/>
+  </Model>

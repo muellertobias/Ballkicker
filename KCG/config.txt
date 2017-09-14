@@ -1,0 +1,13 @@
+-target_dir "D:/Development/Scadet/RobotTar/KCG" -target C -name_length 200 -significance_length 31 -user_config "./user_macros.h" 
+-root StateMachine
+"D:/Development/Scadet/RobotTar/Operator1.xscade"
+"D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libdigital/digital.xscade"
+"D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libdigital/TruthTables.xscade"
+"D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/liblinear/linear.xscade"
+"D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/liblinear/filters.xscade"
+"D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libmath/vect.xscade"
+"D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libmath/math.xscade"
+"D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libmathext/mathext.xscade"
+"D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libpwlinear/pwlinear.xscade"
+"D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libpwlinear/lut.xscade"
+"D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libverif/libverif.xscade"

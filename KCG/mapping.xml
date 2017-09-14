@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--$********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
+** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
+** Generation date: 2017-09-11T14:21:06
+*************************************************************$-->
+<mapping>
+  <config>
+    <option name="use_types" value="#off#"/>
+    <option name="imported_root_package" value="#off#"/>
+    <option name="root_package" value="#off#"/>
+    <option name="xml_basename" value="kcg_xml_filter_out.scade"/>
+    <option name="state_vector" value="#off#"/>
+    <option name="static" value="#off#"/>
+    <option name="separate_io_all" value="#off#"/>
+    <option name="no_separate_io" value="#off#"/>
+    <option name="separate_io" value="#off#"/>
+    <option name="warn_error" value="#off#"/>
+    <option name="short_circuit" value="#off#"/>
+    <option name="wrap_c_ops" value="#off#"/>
+    <option name="input_file"
+        value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libverif/libverif.xscade"/>
+    <option name="input_file"
+        value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libpwlinear/lut.xscade"/>
+    <option name="input_file"
+        value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libpwlinear/pwlinear.xscade"/>
+    <option name="input_file"
+        value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libmathext/mathext.xscade"/>
+    <option name="input_file"
+        value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libmath/math.xscade"/>
+    <option name="input_file"
+        value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libmath/vect.xscade"/>
+    <option name="input_file"
+        value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/liblinear/filters.xscade"/>
+    <option name="input_file"
+        value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/liblinear/linear.xscade"/>
+    <option name="input_file"
+        value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libdigital/TruthTables.xscade"/>
+    <option name="input_file"
+        value="D:/Program Files (x86)/Esterel Technologies/SCADE R17/SCADE/libraries/SC65/libdigital/digital.xscade"/>
+    <option name="input_file" value="D:/Development/Scadet/RobotTar/Operator1.xscade"/>
+    <option name="probes" value="#off#"/>
+    <option name="debug" value="#off#"/>
+    <option name="no_observe" value="#off#"/>
+    <option name="observe" value="#off#"/>
+    <option name="user_config" value="./user_macros.h"/>
+    <option name="input_threshold" value="#off#"/>
+    <option name="header" value="#off#"/>
+    <option name="significance_length" value="31"/>
+    <option name="name_length" value="200"/>
+    <option name="globals_prefix" value="#off#"/>
+    <option name="keep_asserts" value="#off#"/>
+    <option name="global_root_context" value="#off#"/>
+    <option name="expall" value="#off#"/>
+    <option name="noexp" value="#off#"/>
+    <option name="exp" value="#off#"/>
+    <option name="target_dir" value="D:/Development/Scadet/RobotTar/KCG"/>
+    <option name="target" value="C"/>
+    <option name="root" value="StateMachine"/>
+    <option name="auth" value="#off#"/>
+  </config>
+  <model>
+    <predefType id="1" name="bool"/>
+    <predefType id="2" name="char"/>
+    <predefType id="3" name="int8"/>
+    <predefType id="4" name="int16"/>
+    <predefType id="5" name="int32"/>
+    <predefType id="6" name="int64"/>
+    <predefType id="7" name="uint8"/>
+    <predefType id="8" name="uint16"/>
+    <predefType id="9" name="uint32"/>
+    <predefType id="10" name="uint64"/>
+    <predefType id="11" name="float32"/>
+    <predefType id="12" name="float64"/>
+    <predefType id="13" name="size"/>
+    <operator id="14" name="StateMachine" imported="false" root="true" expanded="false">
+      <input id="15" name="AverageSonar" clock="false" type="4"/>
+      <input id="16" name="Start" clock="false" type="1"/>
+      <output id="17" name="CountValue" clock="false" type="9"/>
+      <output id="18" name="SpeedValue" clock="false" type="4"/>
+      <signal id="19" name="OnBallSignal"/>
+      <signal id="20" name="OffBallSignal"/>
+      <signal id="21" name="StartSignal"/>
+      <automaton id="22" name="CountSM">
+        <state id="23" name="Wait" initial="true" final="false" default="false">
+          <fork id="24" name="1" kind="strong">
+            <transition id="25" dest="27"/>
+            <last id="26"/>
+          </fork>
+        </state>
+        <state id="27" name="Count" initial="false" final="false" default="false">
+          <fork id="28" name="1" kind="strong">
+            <transition id="29" dest="23"/>
+          </fork>
+        </state>
+      </automaton>
+      <instance id="30" name="1" op="61" expanded="true">
+        <input id="31" name="IROI_Input" clock="false" type="4"/>
+        <input id="32" name="A" clock="false" type="4"/>
+        <input id="33" name="B" clock="false" type="4"/>
+        <output id="34" name="IROI_Output" clock="false" type="1"/>
+        <assume id="35" name="A1"/>
+      </instance>
+      <instance id="36" name="1" op="63" expanded="true">
+        <input id="37" name="IRIO_Input" clock="false" type="4"/>
+        <input id="38" name="A" clock="false" type="4"/>
+        <input id="39" name="B" clock="false" type="4"/>
+        <output id="40" name="IRIO_Output" clock="false" type="1"/>
+        <assume id="41" name="A1"/>
+      </instance>
+      <automaton id="42" name="SM2">
+        <state id="43" name="Drive" initial="false" final="false" default="false">
+          <fork id="44" name="1" kind="strong">
+            <transition id="45" dest="46"/>
+          </fork>
+        </state>
+        <state id="46" name="Init" initial="true" final="false" default="false">
+          <fork id="47" name="1" kind="strong">
+            <transition id="48" dest="43"/>
+          </fork>
+        </state>
+      </automaton>
+    </operator>
+    <package id="49" name="digital"/>
+    <package id="50" name="truthtables">
+      <enum id="51" name="TruthTableValues">
+        <value id="52" name="T" default="false"/>
+        <value id="53" name="F" default="false"/>
+        <value id="54" name="X" default="false"/>
+      </enum>
+    </package>
+    <package id="55" name="linear"/>
+    <package id="56" name="filters"/>
+    <package id="57" name="vect"/>
+    <package id="58" name="math">
+      <operator id="59" name="InRangeInOut" imported="false" root="false" expanded="true"/>
+      <operator id="60" name="InRangeOutIn" imported="false" root="false" expanded="true"/>
+      <mono id="61" src="60">
+        <typeVar id="62" name="T" type="4"/>
+      </mono>
+      <mono id="63" src="59">
+        <typeVar id="64" name="T" type="4"/>
+      </mono>
+    </package>
+    <package id="65" name="mathext">
+      <package id="66" name="mathextimpl"/>
+    </package>
+    <package id="67" name="pwlinear"/>
+    <package id="68" name="lut"/>
+    <package id="69" name="verif"/>
+  </model>
+  <generated>
+    <c>
+      <file id="70" name="StateMachine.h">
+        <function id="71" name="StateMachine_init">
+          <parameter id="72" name="outC" type="78" pointer="true"/>
+        </function>
+        <function id="73" name="StateMachine_reset">
+          <parameter id="74" name="outC" type="78" pointer="true"/>
+        </function>
+        <function id="75" name="StateMachine">
+          <parameter id="76" name="inC" type="85" pointer="true"/>
+          <parameter id="77" name="outC" type="78" pointer="true"/>
+        </function>
+        <struct id="78" name="outC_StateMachine">
+          <field id="79" name="CountValue" type="136" pointer="false"/>
+          <field id="80" name="SpeedValue" type="131" pointer="false"/>
+          <field id="81" name="Speed" type="131" pointer="false"/>
+          <field id="82" name="Counting" type="136" pointer="false"/>
+          <field id="83" name="SM2_state_nxt" type="96" pointer="false"/>
+          <field id="84" name="CountSM_state_nxt" type="89" pointer="false"/>
+        </struct>
+        <struct id="85" name="inC_StateMachine">
+          <field id="86" name="AverageSonar" type="131" pointer="false"/>
+          <field id="87" name="Start" type="141" pointer="false"/>
+        </struct>
+      </file>
+      <file id="88" name="kcg_types.h">
+        <enum id="89" name="SSM_ST_CountSM" tagName="kcg_tag_SSM_ST_CountSM">
+          <value id="90" name="SSM_st_Wait_CountSM"/>
+          <value id="91" name="SSM_st_Count_CountSM"/>
+        </enum>
+        <enum id="92" name="SSM_TR_CountSM" tagName="kcg_tag_SSM_TR_CountSM">
+          <value id="93" name="SSM_TR_no_trans_CountSM"/>
+          <value id="94" name="SSM_TR_Wait_Count_1_Wait_CountSM"/>
+          <value id="95" name="SSM_TR_Count_Wait_1_Count_CountSM"/>
+        </enum>
+        <enum id="96" name="SSM_ST_SM2" tagName="kcg_tag_SSM_ST_SM2">
+          <value id="97" name="SSM_st_Drive_SM2"/>
+          <value id="98" name="SSM_st_Init_SM2"/>
+        </enum>
+        <enum id="99" name="SSM_TR_SM2" tagName="kcg_tag_SSM_TR_SM2">
+          <value id="100" name="SSM_TR_no_trans_SM2"/>
+          <value id="101" name="SSM_TR_Drive_Init_1_Drive_SM2"/>
+          <value id="102" name="SSM_TR_Init_Drive_1_Init_SM2"/>
+        </enum>
+        <enum id="103" name="TruthTableValues_truthtables" tagName="kcg_tag_TruthTableValues_truthtables">
+          <value id="104" name="T_truthtables"/>
+          <value id="105" name="F_truthtables"/>
+          <value id="106" name="X_truthtables"/>
+        </enum>
+        <macro id="107" name="kcg_assign_array"/>
+        <macro id="108" name="kcg_assign_struct"/>
+        <macro id="109" name="kcg_lnot_uint8"/>
+        <macro id="110" name="kcg_lnot_uint16"/>
+        <macro id="111" name="kcg_lnot_uint32"/>
+        <macro id="112" name="kcg_lnot_uint64"/>
+        <macro id="113" name="kcg_lsl_uint8"/>
+        <macro id="114" name="kcg_lsl_uint16"/>
+        <macro id="115" name="kcg_lsl_uint32"/>
+        <macro id="116" name="kcg_lsl_uint64"/>
+        <macro id="117" name="kcg_true"/>
+        <macro id="118" name="kcg_false"/>
+        <macro id="119" name="kcg_lit_int8"/>
+        <macro id="120" name="kcg_lit_int16"/>
+        <macro id="121" name="kcg_lit_int32"/>
+        <macro id="122" name="kcg_lit_int64"/>
+        <macro id="123" name="kcg_lit_uint8"/>
+        <macro id="124" name="kcg_lit_uint16"/>
+        <macro id="125" name="kcg_lit_uint32"/>
+        <macro id="126" name="kcg_lit_uint64"/>
+        <macro id="127" name="kcg_lit_size"/>
+        <macro id="128" name="kcg_lit_float64"/>
+        <macro id="129" name="kcg_lit_float32"/>
+        <predefType id="130" name="kcg_int8"/>
+        <predefType id="131" name="kcg_int16"/>
+        <predefType id="132" name="kcg_int32"/>
+        <predefType id="133" name="kcg_int64"/>
+        <predefType id="134" name="kcg_uint8"/>
+        <predefType id="135" name="kcg_uint16"/>
+        <predefType id="136" name="kcg_uint32"/>
+        <predefType id="137" name="kcg_uint64"/>
+        <predefType id="138" name="kcg_size"/>
+        <predefType id="139" name="kcg_float64"/>
+        <predefType id="140" name="kcg_float32"/>
+        <predefType id="141" name="kcg_bool"/>
+        <predefType id="142" name="kcg_char"/>
+        <macro id="143" name="KCG_MAPW_CPY"/>
+      </file>
+      <file id="144" name="kcg_consts.h"/>
+      <file id="145" name="kcg_sensors.h"/>
+    </c>
+    <map srcId="139" dstId="128" role="wrapped-lit"/>
+    <map srcId="140" dstId="129" role="wrapped-lit"/>
+    <map srcId="138" dstId="127" role="wrapped-lit"/>
+    <map srcId="137" dstId="126" role="wrapped-lit"/>
+    <map srcId="137" dstId="112" role="wrapped-lnot"/>
+    <map srcId="137" dstId="116" role="wrapped-lsl"/>
+    <map srcId="136" dstId="125" role="wrapped-lit"/>
+    <map srcId="136" dstId="111" role="wrapped-lnot"/>
+    <map srcId="136" dstId="115" role="wrapped-lsl"/>
+    <map srcId="135" dstId="124" role="wrapped-lit"/>
+    <map srcId="135" dstId="110" role="wrapped-lnot"/>
+    <map srcId="135" dstId="114" role="wrapped-lsl"/>
+    <map srcId="134" dstId="123" role="wrapped-lit"/>
+    <map srcId="134" dstId="109" role="wrapped-lnot"/>
+    <map srcId="134" dstId="113" role="wrapped-lsl"/>
+    <map srcId="133" dstId="122" role="wrapped-lit"/>
+    <map srcId="132" dstId="121" role="wrapped-lit"/>
+    <map srcId="131" dstId="120" role="wrapped-lit"/>
+    <map srcId="130" dstId="119" role="wrapped-lit"/>
+  </generated>
+  <map modelId="54" generatedId="106"/>
+  <map modelId="53" generatedId="105"/>
+  <map modelId="52" generatedId="104"/>
+  <map modelId="48" generatedId="102"/>
+  <map modelId="45" generatedId="101"/>
+  <map modelId="42" generatedId="100" role="autom-no-trans-enum"/>
+  <map modelId="29" generatedId="95"/>
+  <map modelId="25" generatedId="94"/>
+  <map modelId="22" generatedId="93" role="autom-no-trans-enum"/>
+  <map modelId="46" generatedId="98"/>
+  <map modelId="43" generatedId="97"/>
+  <map modelId="27" generatedId="91"/>
+  <map modelId="23" generatedId="90"/>
+  <map modelId="14" generatedId="72" role="context-parameter"/>
+  <map modelId="14" generatedId="71" role="init-method"/>
+  <map modelId="14" generatedId="74" role="context-parameter"/>
+  <map modelId="14" generatedId="73" role="reset-method"/>
+  <map modelId="14" generatedId="76" role="input-struct-parameter"/>
+  <map modelId="16" generatedId="87"/>
+  <map modelId="21" generatedId="87"/>
+  <map modelId="15" generatedId="86"/>
+  <map modelId="31" generatedId="86"/>
+  <map modelId="37" generatedId="86"/>
+  <map modelId="14" generatedId="85" role="input-struct-type"/>
+  <map modelId="14" generatedId="77" role="context-parameter"/>
+  <map modelId="22" generatedId="84" role="autom-next-state"/>
+  <map modelId="42" generatedId="83" role="autom-next-state"/>
+  <map modelId="22" generatedId="82" role="memory"/>
+  <map modelId="23" generatedId="82" role="memory"/>
+  <map modelId="26" generatedId="82" role="memory"/>
+  <map modelId="43" generatedId="81" role="memory"/>
+  <map modelId="46" generatedId="81" role="memory"/>
+  <map modelId="18" generatedId="80"/>
+  <map modelId="17" generatedId="79"/>
+  <map modelId="22" generatedId="79" role="memory"/>
+  <map modelId="14" generatedId="78" role="context-type"/>
+  <map modelId="14" generatedId="70" role="interface-file"/>
+  <map modelId="14" generatedId="75" role="cycle-method"/>
+  <map modelId="51" generatedId="103"/>
+  <map modelId="42" generatedId="99" role="autom-transitions-type"/>
+  <map modelId="42" generatedId="96" role="autom-states-type"/>
+  <map modelId="22" generatedId="92" role="autom-transitions-type"/>
+  <map modelId="22" generatedId="89" role="autom-states-type"/>
+  <map modelId="2" generatedId="142"/>
+  <map modelId="1" generatedId="141"/>
+  <map modelId="12" generatedId="139"/>
+  <map modelId="11" generatedId="140"/>
+  <map modelId="13" generatedId="138"/>
+  <map modelId="10" generatedId="137"/>
+  <map modelId="9" generatedId="136"/>
+  <map modelId="8" generatedId="135"/>
+  <map modelId="7" generatedId="134"/>
+  <map modelId="6" generatedId="133"/>
+  <map modelId="5" generatedId="132"/>
+  <map modelId="4" generatedId="131"/>
+  <map modelId="3" generatedId="130"/>
+</mapping>
+<!--$********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
+** mapping.xml
+** Generation date: 2017-09-11T14:21:06
+*************************************************************$-->
