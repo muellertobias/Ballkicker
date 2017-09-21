@@ -93,6 +93,8 @@ TASK(OSEK_Task_Background)
 	
 	int index = 0;
 	
+	int armcount = 0;
+	
 	while(1)
 	{
 		//input.ColorSenser = ecrobot_get_sonar_sensor(NXT_PORT_S2);
@@ -105,6 +107,7 @@ TASK(OSEK_Task_Background)
 		
 		input.ColorSensor = ecrobot_get_light_sensor(NXT_PORT_S3);
 		
+		input.KickForward = ecrobot_get_touch_sensor(NXT_PORT_S1);
 		
 		/* this function computes next step, returns current outputs */
 		StateMachine(&input, &result);
@@ -131,16 +134,39 @@ TASK(OSEK_Task_Background)
 		
 		display_goto_xy(0, 4);
 		display_string("Stop: ");
-		display_int(result.Output3, 7);
+		//display_int(result.Output3, 7);
 		
 		ecrobot_set_motor_speed(NXT_PORT_A, result.SpeedValue);
 		
+		ecrobot_set_motor_speed(NXT_PORT_B, result.ArmSpeedValue);
+		
 		display_update();
 		
+		// Pieper!
 		if (lastCount != result.CountValue) 
 		{
 			lastCount = result.CountValue;
 			ecrobot_sound_tone(500, 250, 100);
+		}
+
+		if (result.ArmSpeedValue > 0) 
+		{
+			input.KickFinished = kcg_false;
+			armcount++;
+		} 
+		else if (result.ArmSpeedValue < 0) 
+		{
+			armcount--;
+		}
+		
+		if (armcount == 15) 
+		{
+			input.KickBackward = kcg_true;
+		} 
+		else if (armcount == 0) 
+		{
+			input.KickBackward = kcg_false;
+			input.KickFinished = kcg_true;
 		}
 		
 		/* wait for sone_int_value msec */

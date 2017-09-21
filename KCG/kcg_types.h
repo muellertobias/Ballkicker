@@ -1,6 +1,6 @@
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-21T12:18:29
+** Generation date: 2017-09-21T15:37:53
 *************************************************************$ */
 #ifndef _KCG_TYPES_H_
 #define _KCG_TYPES_H_
@@ -185,25 +185,21 @@ typedef enum kcg_tag_TruthTableValues_truthtables {
 /* StateMachine/SM3: */
 typedef enum kcg_tag_SSM_TR_SM3 {
   SSM_TR_no_trans_SM3,
-  SSM_TR_DriveAndCount_Stop_1_DriveAndCount_SM3,
-  SSM_TR_Stop_DriveAndCount_1_Stop_SM3
+  SSM_TR_DriveAndCount_Free_1_DriveAndCount_SM3,
+  SSM_TR_Stop_DriveAndCount_1_Stop_SM3,
+  SSM_TR_Kick_State9_1_Kick_SM3,
+  SSM_TR_State9_Kick_1_State9_SM3,
+  SSM_TR_State9_Stop_2_State9_SM3,
+  SSM_TR_Free_State9_1_Free_SM3
 } SSM_TR_SM3;
 /* StateMachine/SM3: */
 typedef enum kcg_tag_SSM_ST_SM3 {
   SSM_st_DriveAndCount_SM3,
-  SSM_st_Stop_SM3
+  SSM_st_Stop_SM3,
+  SSM_st_Kick_SM3,
+  SSM_st_State9_SM3,
+  SSM_st_Free_SM3
 } SSM_ST_SM3;
-/* StateMachine/SM3:DriveAndCount:Drive: */
-typedef enum kcg_tag_SSM_TR_Drive_DriveAndCount_SM3 {
-  SSM_TR_no_trans_Drive_DriveAndCount_SM3,
-  SSM_TR_Drive_Init_1_Drive_Drive_DriveAndCount_SM3,
-  SSM_TR_Init_Drive_1_Init_Drive_DriveAndCount_SM3
-} SSM_TR_Drive_DriveAndCount_SM3;
-/* StateMachine/SM3:DriveAndCount:Drive: */
-typedef enum kcg_tag_SSM_ST_Drive_DriveAndCount_SM3 {
-  SSM_st_Drive_Drive_DriveAndCount_SM3,
-  SSM_st_Init_Drive_DriveAndCount_SM3
-} SSM_ST_Drive_DriveAndCount_SM3;
 /* StateMachine/SM3:DriveAndCount:CountSM: */
 typedef enum kcg_tag_SSM_TR_CountSM_DriveAndCount_SM3 {
   SSM_TR_no_trans_CountSM_DriveAndCount_SM3,
@@ -215,9 +211,23 @@ typedef enum kcg_tag_SSM_ST_CountSM_DriveAndCount_SM3 {
   SSM_st_Wait_CountSM_DriveAndCount_SM3,
   SSM_st_Count_CountSM_DriveAndCount_SM3
 } SSM_ST_CountSM_DriveAndCount_SM3;
+/* StateMachine/SM3:Kick:Kicking: */
+typedef enum kcg_tag_SSM_TR_Kicking_Kick_SM3 {
+  SSM_TR_no_trans_Kicking_Kick_SM3,
+  SSM_TR_DriveBack_Forward_1_DriveBack_Kicking_Kick_SM3,
+  SSM_TR_Forward_Backward_1_Forward_Kicking_Kick_SM3,
+  SSM_TR_Backward_State11_1_Backward_Kicking_Kick_SM3
+} SSM_TR_Kicking_Kick_SM3;
+/* StateMachine/SM3:Kick:Kicking: */
+typedef enum kcg_tag_SSM_ST_Kicking_Kick_SM3 {
+  SSM_st_DriveBack_Kicking_Kick_SM3,
+  SSM_st_Forward_Kicking_Kick_SM3,
+  SSM_st_Backward_Kicking_Kick_SM3,
+  SSM_st_State11_Kicking_Kick_SM3
+} SSM_ST_Kicking_Kick_SM3;
 #endif /* _KCG_TYPES_H_ */
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** kcg_types.h
-** Generation date: 2017-09-21T12:18:29
+** Generation date: 2017-09-21T15:37:53
 *************************************************************$ */
 

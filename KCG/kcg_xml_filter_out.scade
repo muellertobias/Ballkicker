@@ -1,29 +1,38 @@
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-21T12:18:24
+** Generation date: 2017-09-21T15:37:48
 *************************************************************$ */
 
 /* xscade source: D:/Development/Scadet/RobotTar/Operator1.xscade */
 node StateMachine(
     AverageSonar : int16 last = 0;
     Start : bool;
-    ColorSensor : int16 last = 0)
+    ColorSensor : int16 last = 0;
+    KickForward : bool last = false;
+    KickBackward : bool;
+    KickFinished : bool)
   returns (
     CountValue : uint32 last = 0;
     SpeedValue : int16 last = 0;
-    Output3 : bool last = false)
+    ArmSpeedValue : int16 last = 0)
 sig
-  OnBallSignal, OffBallSignal, StartSignal, StopSignal;
+  OnBallSignal, OffBallSignal, StartSignal, StopSignal, KickForwardSignal,
+  KickBackwardSignal, KickFinishedSignal;
 var
   Counting : uint32 last = 0;
   Speed : int16 last = 0;
-  Local1 : bool last = false;
+  ArmSpeed : int16 last = 0;
   _L1 : int16;
   _L9 : bool;
   _L14 : bool;
   _L15 : bool;
   _L16 : int16;
   _L18 : bool;
+  _L21 : bool;
+  _L22 : bool;
+  _L23 : int16;
+  _L25 : bool;
+  _L26 : int16;
 let
   _L1= AverageSonar;
   _L9= #1 math::InRangeOutIn(_L1, 0, 12);
@@ -55,48 +64,74 @@ let
             let
             tel
         returns ..;
-
-        automaton Drive
-          state Drive
-            unless
-              if 'StopSignal do let Speed= 0; tel restart Init;
-            var
-              _L2 : int16;
-              _L4 : bool;
-            let
-              SpeedValue= _L2;
-              _L2= Speed;
-              Output3= _L4;
-              _L4= Local1;
-            tel
-
-          initial state Init
-            unless
-              if 'StartSignal do let Speed= 20; tel restart Drive;
-            var
-              _L2 : int16;
-            let
-              _L2= Speed;
-              SpeedValue= _L2;
-            tel
-        returns ..;
       tel
       until
-        if 'StopSignal do let Local1= false; tel restart Stop;
+        if 'StopSignal do let Speed= - 20; tel restart Free;
 
     initial state Stop
       unless
-        if 'StartSignal do let Local1= true; tel restart DriveAndCount;
-      var
-        _L2 : bool;
+        if 'StartSignal do let Speed= 20; tel restart DriveAndCount;
       let
-        Output3= _L2;
-        _L2= Local1;
+      tel
+
+    state Kick
+      unless
+        if 'OffBallSignal do let Speed= - 20; tel restart State9;
+      let
+
+        automaton Kicking
+          initial state DriveBack
+            unless
+              if 'OnBallSignal do let ArmSpeed= 50; tel restart Forward;
+            let
+            tel
+
+          state Forward
+            unless
+              if 'KickBackwardSignal
+                do let ArmSpeed= - 50; tel restart Backward;
+            let
+            tel
+
+          state Backward
+            unless
+              if 'KickFinishedSignal do let ArmSpeed= 0; tel restart State11;
+            let
+            tel
+
+          state State11
+            let
+            tel
+        returns ..;
+      tel
+
+    state State9
+      unless
+        if 'OnBallSignal do let Speed= 0; tel restart Kick;
+      let
+      tel
+      until
+        if 'StopSignal do let Speed= 0; tel restart Stop;
+
+    state Free
+      unless
+        if 'StopSignal #6 = false restart State9;
+      let
       tel
   returns ..;
   _L16= ColorSensor;
   _L18= #2 math::InRangeInOut(_L16, 570, 1024);
   emit 'StopSignal if _L18;
+  emit 'KickForwardSignal if _L21;
+  _L21= KickForward;
+  _L22= KickBackward;
+  emit 'KickBackwardSignal if _L22;
+  _L23= ArmSpeed;
+  ArmSpeedValue= _L23;
+  _L25= KickFinished;
+  emit 'KickFinishedSignal if _L25;
+  SpeedValue= _L26;
+  _L26= Speed;
 tel
 
 
@@ -4878,5 +4913,5 @@ end;
 
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** -
-** Generation date: 2017-09-21T12:18:24
+** Generation date: 2017-09-21T15:37:48
 *************************************************************$ */

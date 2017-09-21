@@ -1,6 +1,6 @@
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-21T12:18:29
+** Generation date: 2017-09-21T15:37:53
 *************************************************************$ */
 #ifndef _StateMachine_H_
 #define _StateMachine_H_
@@ -17,6 +17,9 @@ typedef struct {
      _L1/ */ AverageSonar;
   kcg_bool /* Start/, StartSignal/, _L15/ */ Start;
   kcg_int16 /* @3/IRIO_Input/, @3/_L3/, ColorSensor/, _L16/ */ ColorSensor;
+  kcg_bool /* KickForward/, KickForwardSignal/, _L21/ */ KickForward;
+  kcg_bool /* KickBackward/, KickBackwardSignal/, _L22/ */ KickBackward;
+  kcg_bool /* KickFinished/, KickFinishedSignal/, _L25/ */ KickFinished;
 } inC_StateMachine;
 
 /* =====================  no output structure  ====================== */
@@ -25,17 +28,18 @@ typedef struct {
 typedef struct {
   /* ---------------------------  outputs  --------------------------- */
   kcg_uint32 /* CountValue/ */ CountValue;
-  kcg_int16 /* SpeedValue/ */ SpeedValue;
-  kcg_bool /* Output3/ */ Output3;
+  kcg_int16 /* Speed/, SpeedValue/, _L26/ */ SpeedValue;
+  kcg_int16 /* ArmSpeedValue/, _L23/ */ ArmSpeedValue;
   /* -----------------------  no local probes  ----------------------- */
   /* ----------------------- local memories  ------------------------- */
-  kcg_bool /* Local1/ */ Local1;
-  kcg_int16 /* Speed/ */ Speed;
-  kcg_uint32 /* Counting/ */ Counting;
-  SSM_ST_SM3 /* SM3: */ SM3_state_nxt;
-  SSM_ST_CountSM_DriveAndCount_SM3 /* SM3:DriveAndCount:CountSM: */ CountSM_state_nxt_DriveAndCount_SM3;
-  SSM_ST_Drive_DriveAndCount_SM3 /* SM3:DriveAndCount:Drive: */ Drive_state_nxt_DriveAndCount_SM3;
   kcg_bool init;
+  kcg_bool init1;
+  SSM_ST_CountSM_DriveAndCount_SM3 /* SM3:DriveAndCount:CountSM: */ CountSM_state_nxt_DriveAndCount_SM3;
+  SSM_ST_Kicking_Kick_SM3 /* SM3:Kick:Kicking: */ Kicking_state_nxt_Kick_SM3;
+  SSM_ST_SM3 /* SM3: */ SM3_state_nxt;
+  kcg_uint32 /* Counting/ */ Counting;
+  kcg_int16 /* Speed/ */ Speed;
+  kcg_int16 /* ArmSpeed/ */ ArmSpeed;
   /* -------------------- no sub nodes' contexts  -------------------- */
   /* ----------------- no clocks of observable data ------------------ */
 } outC_StateMachine;
@@ -62,6 +66,6 @@ extern void StateMachine_init(outC_StateMachine *outC);
 #endif /* _StateMachine_H_ */
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** StateMachine.h
-** Generation date: 2017-09-21T12:18:29
+** Generation date: 2017-09-21T15:37:53
 *************************************************************$ */
 
