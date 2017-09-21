@@ -70,7 +70,6 @@ S32 average(S32* array, int size)
 /* Rover MainTask */
 TASK(OSEK_Task_Background)
 {
-	
 	/* result stores the outputs of the statemachine */
 	outC_StateMachine result;
 	inC_StateMachine input;
@@ -81,13 +80,12 @@ TASK(OSEK_Task_Background)
 	/* Init LightSensor, also mandatory */		
 	//ecrobot_set_light_sensor_inactive(NXT_PORT_S1);
 	ecrobot_init_sonar_sensor(NXT_PORT_S2);
-	int count = 0;
-	kcg_bool onBall = kcg_false;
+	ecrobot_set_light_sensor_active(NXT_PORT_S3);
+	
+	int lastCount = 0;
 	
 	int size = 10;
-	
 	S32 values[size];
-	
 	for (int i = 0; i < size; i++) 
 	{
 		values[i] = 255;
@@ -105,6 +103,8 @@ TASK(OSEK_Task_Background)
 		
 		input.Start = ecrobot_get_touch_sensor(NXT_PORT_S1);
 		
+		input.ColorSensor = ecrobot_get_light_sensor(NXT_PORT_S3);
+		
 		
 		/* this function computes next step, returns current outputs */
 		StateMachine(&input, &result);
@@ -114,20 +114,34 @@ TASK(OSEK_Task_Background)
 		
 		display_clear(0);
 		display_goto_xy(0, 0);
-		display_int(input.AverageSonar, 0);
+		display_string("Sonar: ");
+		display_int(input.AverageSonar, 7);
 		
-		display_goto_xy(5,0);
-		display_int(result.CountValue, 0);
+		display_goto_xy(0, 1);
+		display_string("Count: ");
+		display_int(result.CountValue, 7);
 		
-		display_goto_xy(0,1);
-		display_int(input.Start, 0);
+		display_goto_xy(0, 2);
+		display_string("Speed: ");
+		display_int(result.SpeedValue / 4, 7);
 		
-		display_goto_xy(5,1);
-		display_int(result.SpeedValue / 4, 0);
+		display_goto_xy(0, 3);
+		display_string("Color: ");
+		display_int(input.ColorSensor, 7);
+		
+		display_goto_xy(0, 4);
+		display_string("Stop: ");
+		display_int(result.Output3, 7);
 		
 		ecrobot_set_motor_speed(NXT_PORT_A, result.SpeedValue);
 		
 		display_update();
+		
+		if (lastCount != result.CountValue) 
+		{
+			lastCount = result.CountValue;
+			ecrobot_sound_tone(500, 250, 100);
+		}
 		
 		/* wait for sone_int_value msec */
 		systick_wait_ms(50); 				

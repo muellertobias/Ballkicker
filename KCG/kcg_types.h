@@ -1,6 +1,6 @@
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-11T14:21:06
+** Generation date: 2017-09-21T12:18:29
 *************************************************************$ */
 #ifndef _KCG_TYPES_H_
 #define _KCG_TYPES_H_
@@ -182,31 +182,42 @@ typedef enum kcg_tag_TruthTableValues_truthtables {
   F_truthtables,
   X_truthtables
 } TruthTableValues_truthtables;
-/* StateMachine/SM2: */
-typedef enum kcg_tag_SSM_TR_SM2 {
-  SSM_TR_no_trans_SM2,
-  SSM_TR_Drive_Init_1_Drive_SM2,
-  SSM_TR_Init_Drive_1_Init_SM2
-} SSM_TR_SM2;
-/* StateMachine/SM2: */
-typedef enum kcg_tag_SSM_ST_SM2 {
-  SSM_st_Drive_SM2,
-  SSM_st_Init_SM2
-} SSM_ST_SM2;
-/* StateMachine/CountSM: */
-typedef enum kcg_tag_SSM_TR_CountSM {
-  SSM_TR_no_trans_CountSM,
-  SSM_TR_Wait_Count_1_Wait_CountSM,
-  SSM_TR_Count_Wait_1_Count_CountSM
-} SSM_TR_CountSM;
-/* StateMachine/CountSM: */
-typedef enum kcg_tag_SSM_ST_CountSM {
-  SSM_st_Wait_CountSM,
-  SSM_st_Count_CountSM
-} SSM_ST_CountSM;
+/* StateMachine/SM3: */
+typedef enum kcg_tag_SSM_TR_SM3 {
+  SSM_TR_no_trans_SM3,
+  SSM_TR_DriveAndCount_Stop_1_DriveAndCount_SM3,
+  SSM_TR_Stop_DriveAndCount_1_Stop_SM3
+} SSM_TR_SM3;
+/* StateMachine/SM3: */
+typedef enum kcg_tag_SSM_ST_SM3 {
+  SSM_st_DriveAndCount_SM3,
+  SSM_st_Stop_SM3
+} SSM_ST_SM3;
+/* StateMachine/SM3:DriveAndCount:Drive: */
+typedef enum kcg_tag_SSM_TR_Drive_DriveAndCount_SM3 {
+  SSM_TR_no_trans_Drive_DriveAndCount_SM3,
+  SSM_TR_Drive_Init_1_Drive_Drive_DriveAndCount_SM3,
+  SSM_TR_Init_Drive_1_Init_Drive_DriveAndCount_SM3
+} SSM_TR_Drive_DriveAndCount_SM3;
+/* StateMachine/SM3:DriveAndCount:Drive: */
+typedef enum kcg_tag_SSM_ST_Drive_DriveAndCount_SM3 {
+  SSM_st_Drive_Drive_DriveAndCount_SM3,
+  SSM_st_Init_Drive_DriveAndCount_SM3
+} SSM_ST_Drive_DriveAndCount_SM3;
+/* StateMachine/SM3:DriveAndCount:CountSM: */
+typedef enum kcg_tag_SSM_TR_CountSM_DriveAndCount_SM3 {
+  SSM_TR_no_trans_CountSM_DriveAndCount_SM3,
+  SSM_TR_Wait_Count_1_Wait_CountSM_DriveAndCount_SM3,
+  SSM_TR_Count_Wait_1_Count_CountSM_DriveAndCount_SM3
+} SSM_TR_CountSM_DriveAndCount_SM3;
+/* StateMachine/SM3:DriveAndCount:CountSM: */
+typedef enum kcg_tag_SSM_ST_CountSM_DriveAndCount_SM3 {
+  SSM_st_Wait_CountSM_DriveAndCount_SM3,
+  SSM_st_Count_CountSM_DriveAndCount_SM3
+} SSM_ST_CountSM_DriveAndCount_SM3;
 #endif /* _KCG_TYPES_H_ */
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** kcg_types.h
-** Generation date: 2017-09-11T14:21:06
+** Generation date: 2017-09-21T12:18:29
 *************************************************************$ */
 

@@ -1,6 +1,6 @@
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-11T14:21:06
+** Generation date: 2017-09-21T12:18:29
 *************************************************************$ */
 #ifndef _StateMachine_H_
 #define _StateMachine_H_
@@ -16,6 +16,7 @@ typedef struct {
      AverageSonar/,
      _L1/ */ AverageSonar;
   kcg_bool /* Start/, StartSignal/, _L15/ */ Start;
+  kcg_int16 /* @3/IRIO_Input/, @3/_L3/, ColorSensor/, _L16/ */ ColorSensor;
 } inC_StateMachine;
 
 /* =====================  no output structure  ====================== */
@@ -25,12 +26,16 @@ typedef struct {
   /* ---------------------------  outputs  --------------------------- */
   kcg_uint32 /* CountValue/ */ CountValue;
   kcg_int16 /* SpeedValue/ */ SpeedValue;
+  kcg_bool /* Output3/ */ Output3;
   /* -----------------------  no local probes  ----------------------- */
   /* ----------------------- local memories  ------------------------- */
+  kcg_bool /* Local1/ */ Local1;
   kcg_int16 /* Speed/ */ Speed;
   kcg_uint32 /* Counting/ */ Counting;
-  SSM_ST_SM2 /* SM2: */ SM2_state_nxt;
-  SSM_ST_CountSM /* CountSM: */ CountSM_state_nxt;
+  SSM_ST_SM3 /* SM3: */ SM3_state_nxt;
+  SSM_ST_CountSM_DriveAndCount_SM3 /* SM3:DriveAndCount:CountSM: */ CountSM_state_nxt_DriveAndCount_SM3;
+  SSM_ST_Drive_DriveAndCount_SM3 /* SM3:DriveAndCount:Drive: */ Drive_state_nxt_DriveAndCount_SM3;
+  kcg_bool init;
   /* -------------------- no sub nodes' contexts  -------------------- */
   /* ----------------- no clocks of observable data ------------------ */
 } outC_StateMachine;
@@ -51,11 +56,12 @@ extern void StateMachine_init(outC_StateMachine *outC);
   Expanded instances for: StateMachine/
   @1: (math::InRangeOutIn#1)
   @2: (math::InRangeInOut#1)
+  @3: (math::InRangeInOut#2)
 */
 
 #endif /* _StateMachine_H_ */
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** StateMachine.h
-** Generation date: 2017-09-11T14:21:06
+** Generation date: 2017-09-21T12:18:29
 *************************************************************$ */
 
