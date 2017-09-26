@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--$********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-21T15:37:53
+** Generation date: 2017-09-26T15:13:06
 *************************************************************$-->
 <mapping>
   <config>
@@ -75,10 +75,10 @@
     <operator id="14" name="StateMachine" imported="false" root="true" expanded="false">
       <input id="15" name="AverageSonar" clock="false" type="4"/>
       <input id="16" name="Start" clock="false" type="1"/>
-      <input id="17" name="ColorSensor" clock="false" type="4"/>
-      <input id="18" name="KickForward" clock="false" type="1"/>
-      <input id="19" name="KickBackward" clock="false" type="1"/>
-      <input id="20" name="KickFinished" clock="false" type="1"/>
+      <input id="17" name="KickMoveBackward" clock="false" type="1"/>
+      <input id="18" name="KickMoveFinished" clock="false" type="1"/>
+      <input id="19" name="KickCountValue" clock="false" type="4"/>
+      <input id="20" name="Stop" clock="false" type="1"/>
       <output id="21" name="CountValue" clock="false" type="9"/>
       <output id="22" name="SpeedValue" clock="false" type="4"/>
       <output id="23" name="ArmSpeedValue" clock="false" type="4"/>
@@ -86,9 +86,9 @@
       <signal id="25" name="OffBallSignal"/>
       <signal id="26" name="StartSignal"/>
       <signal id="27" name="StopSignal"/>
-      <signal id="28" name="KickForwardSignal"/>
-      <signal id="29" name="KickBackwardSignal"/>
-      <signal id="30" name="KickFinishedSignal"/>
+      <signal id="28" name="KickMoveBackwardSignal"/>
+      <signal id="29" name="KickMoveFinishedSignal"/>
+      <signal id="30" name="KickingFinishedSignal"/>
       <instance id="31" name="1" op="98" expanded="true">
         <input id="32" name="IROI_Input" clock="false" type="4"/>
         <input id="33" name="A" clock="false" type="4"/>
@@ -106,7 +106,7 @@
       <automaton id="43" name="SM3">
         <state id="44" name="DriveAndCount" initial="false" final="false" default="false">
           <automaton id="45" name="CountSM">
-            <state id="46" name="Wait" initial="true" final="false" default="false">
+            <state id="46" name="Wait" initial="false" final="false" default="false">
               <fork id="47" name="1" kind="strong">
                 <transition id="48" dest="49"/>
               </fork>
@@ -117,60 +117,62 @@
                 <last id="52"/>
               </fork>
             </state>
-          </automaton>
-          <fork id="53" name="1" kind="weak">
-            <transition id="54" dest="77"/>
-          </fork>
-        </state>
-        <state id="55" name="Stop" initial="true" final="false" default="false">
-          <fork id="56" name="1" kind="strong">
-            <transition id="57" dest="44"/>
-          </fork>
-        </state>
-        <state id="58" name="Kick" initial="false" final="false" default="false">
-          <automaton id="59" name="Kicking">
-            <state id="60" name="DriveBack" initial="true" final="false" default="false">
-              <fork id="61" name="1" kind="strong">
-                <transition id="62" dest="63"/>
+            <state id="53" name="Init" initial="true" final="false" default="false">
+              <fork id="54" name="1" kind="strong">
+                <transition id="55" dest="46"/>
               </fork>
             </state>
-            <state id="63" name="Forward" initial="false" final="false" default="false">
+          </automaton>
+          <fork id="56" name="1" kind="weak">
+            <transition id="57" dest="83"/>
+          </fork>
+        </state>
+        <state id="58" name="Stop" initial="true" final="false" default="false">
+          <fork id="59" name="1" kind="strong">
+            <transition id="60" dest="44"/>
+          </fork>
+        </state>
+        <state id="61" name="Kick" initial="false" final="false" default="false">
+          <automaton id="62" name="Kicking">
+            <state id="63" name="DriveBack" initial="true" final="false" default="false">
               <fork id="64" name="1" kind="strong">
-                <transition id="65" dest="66"/>
+                <transition id="65" dest="68"/>
+              </fork>
+              <fork id="66" name="2" kind="strong">
+                <transition id="67" dest="74"/>
               </fork>
             </state>
-            <state id="66" name="Backward" initial="false" final="false" default="false">
-              <fork id="67" name="1" kind="strong">
-                <transition id="68" dest="69"/>
+            <state id="68" name="Forward" initial="false" final="false" default="false">
+              <fork id="69" name="1" kind="strong">
+                <transition id="70" dest="71"/>
               </fork>
             </state>
-            <state id="69" name="State11" initial="false" final="false" default="false"/>
+            <state id="71" name="Backward" initial="false" final="false" default="false">
+              <fork id="72" name="1" kind="strong">
+                <transition id="73" dest="74"/>
+              </fork>
+            </state>
+            <state id="74" name="Finish" initial="false" final="false" default="false"/>
           </automaton>
-          <fork id="70" name="1" kind="strong">
-            <transition id="71" dest="72"/>
+          <fork id="75" name="1" kind="weak">
+            <transition id="76" dest="78"/>
+            <last id="77"/>
           </fork>
         </state>
-        <state id="72" name="State9" initial="false" final="false" default="false">
-          <fork id="73" name="2" kind="weak">
-            <transition id="74" dest="55"/>
+        <state id="78" name="Kicking" initial="false" final="false" default="false">
+          <fork id="79" name="1" kind="strong">
+            <transition id="80" dest="61"/>
           </fork>
-          <fork id="75" name="1" kind="strong">
-            <transition id="76" dest="58"/>
+          <fork id="81" name="2" kind="strong">
+            <transition id="82" dest="58"/>
           </fork>
         </state>
-        <state id="77" name="Free" initial="false" final="false" default="false">
-          <fork id="78" name="1" kind="strong">
-            <transition id="79" dest="72"/>
+        <state id="83" name="Free" initial="false" final="false" default="false">
+          <fork id="84" name="1" kind="strong">
+            <transition id="85" dest="78"/>
           </fork>
         </state>
       </automaton>
-      <instance id="80" name="2" op="100" expanded="true">
-        <input id="81" name="IRIO_Input" clock="false" type="4"/>
-        <input id="82" name="A" clock="false" type="4"/>
-        <input id="83" name="B" clock="false" type="4"/>
-        <output id="84" name="IRIO_Output" clock="false" type="1"/>
-        <assume id="85" name="A1"/>
-      </instance>
     </operator>
     <package id="86" name="digital"/>
     <package id="87" name="truthtables">
@@ -210,227 +212,233 @@
           <parameter id="111" name="outC" type="115" pointer="true"/>
         </function>
         <function id="112" name="StateMachine">
-          <parameter id="113" name="inC" type="127" pointer="true"/>
+          <parameter id="113" name="inC" type="128" pointer="true"/>
           <parameter id="114" name="outC" type="115" pointer="true"/>
         </function>
         <struct id="115" name="outC_StateMachine">
-          <field id="116" name="CountValue" type="199" pointer="false"/>
-          <field id="117" name="SpeedValue" type="194" pointer="false"/>
-          <field id="118" name="ArmSpeedValue" type="194" pointer="false"/>
-          <field id="119" name="init" type="204" pointer="false"/>
-          <field id="120" name="init1" type="204" pointer="false"/>
-          <field id="121" name="CountSM_state_nxt_DriveAndCount_SM3" type="145" pointer="false"/>
-          <field id="122" name="Kicking_state_nxt_Kick_SM3" type="135" pointer="false"/>
-          <field id="123" name="SM3_state_nxt" type="152" pointer="false"/>
-          <field id="124" name="Counting" type="199" pointer="false"/>
-          <field id="125" name="Speed" type="194" pointer="false"/>
-          <field id="126" name="ArmSpeed" type="194" pointer="false"/>
+          <field id="116" name="CountValue" type="203" pointer="false"/>
+          <field id="117" name="SpeedValue" type="198" pointer="false"/>
+          <field id="118" name="ArmSpeedValue" type="198" pointer="false"/>
+          <field id="119" name="_kicks" type="198" pointer="false"/>
+          <field id="120" name="ArmSpeed" type="198" pointer="false"/>
+          <field id="121" name="Speed" type="198" pointer="false"/>
+          <field id="122" name="Counting" type="203" pointer="false"/>
+          <field id="123" name="SM3_state_nxt" type="156" pointer="false"/>
+          <field id="124" name="Kicking_state_nxt_Kick_SM3" type="136" pointer="false"/>
+          <field id="125" name="CountSM_state_nxt_DriveAndCount_SM3" type="147" pointer="false"/>
+          <field id="126" name="init" type="208" pointer="false"/>
+          <field id="127" name="init1" type="208" pointer="false"/>
         </struct>
-        <struct id="127" name="inC_StateMachine">
-          <field id="128" name="AverageSonar" type="194" pointer="false"/>
-          <field id="129" name="Start" type="204" pointer="false"/>
-          <field id="130" name="ColorSensor" type="194" pointer="false"/>
-          <field id="131" name="KickForward" type="204" pointer="false"/>
-          <field id="132" name="KickBackward" type="204" pointer="false"/>
-          <field id="133" name="KickFinished" type="204" pointer="false"/>
+        <struct id="128" name="inC_StateMachine">
+          <field id="129" name="AverageSonar" type="198" pointer="false"/>
+          <field id="130" name="Start" type="208" pointer="false"/>
+          <field id="131" name="KickMoveBackward" type="208" pointer="false"/>
+          <field id="132" name="KickMoveFinished" type="208" pointer="false"/>
+          <field id="133" name="KickCountValue" type="198" pointer="false"/>
+          <field id="134" name="Stop" type="208" pointer="false"/>
         </struct>
       </file>
-      <file id="134" name="kcg_types.h">
-        <enum id="135" name="SSM_ST_Kicking_Kick_SM3" tagName="kcg_tag_SSM_ST_Kicking_Kick_SM3">
-          <value id="136" name="SSM_st_DriveBack_Kicking_Kick_SM3"/>
-          <value id="137" name="SSM_st_Forward_Kicking_Kick_SM3"/>
-          <value id="138" name="SSM_st_Backward_Kicking_Kick_SM3"/>
-          <value id="139" name="SSM_st_State11_Kicking_Kick_SM3"/>
+      <file id="135" name="kcg_types.h">
+        <enum id="136" name="SSM_ST_Kicking_Kick_SM3" tagName="kcg_tag_SSM_ST_Kicking_Kick_SM3">
+          <value id="137" name="SSM_st_DriveBack_Kicking_Kick_SM3"/>
+          <value id="138" name="SSM_st_Forward_Kicking_Kick_SM3"/>
+          <value id="139" name="SSM_st_Backward_Kicking_Kick_SM3"/>
+          <value id="140" name="SSM_st_Finish_Kicking_Kick_SM3"/>
         </enum>
-        <enum id="140" name="SSM_TR_Kicking_Kick_SM3" tagName="kcg_tag_SSM_TR_Kicking_Kick_SM3">
-          <value id="141" name="SSM_TR_no_trans_Kicking_Kick_SM3"/>
-          <value id="142" name="SSM_TR_DriveBack_Forward_1_DriveBack_Kicking_Kick_SM3"/>
-          <value id="143" name="SSM_TR_Forward_Backward_1_Forward_Kicking_Kick_SM3"/>
-          <value id="144" name="SSM_TR_Backward_State11_1_Backward_Kicking_Kick_SM3"/>
+        <enum id="141" name="SSM_TR_Kicking_Kick_SM3" tagName="kcg_tag_SSM_TR_Kicking_Kick_SM3">
+          <value id="142" name="SSM_TR_no_trans_Kicking_Kick_SM3"/>
+          <value id="143" name="SSM_TR_DriveBack_Forward_1_DriveBack_Kicking_Kick_SM3"/>
+          <value id="144" name="SSM_TR_DriveBack_Finish_2_DriveBack_Kicking_Kick_SM3"/>
+          <value id="145" name="SSM_TR_Forward_Backward_1_Forward_Kicking_Kick_SM3"/>
+          <value id="146" name="SSM_TR_Backward_Finish_1_Backward_Kicking_Kick_SM3"/>
         </enum>
-        <enum id="145" name="SSM_ST_CountSM_DriveAndCount_SM3" tagName="kcg_tag_SSM_ST_CountSM_DriveAndCount_SM3">
-          <value id="146" name="SSM_st_Wait_CountSM_DriveAndCount_SM3"/>
-          <value id="147" name="SSM_st_Count_CountSM_DriveAndCount_SM3"/>
+        <enum id="147" name="SSM_ST_CountSM_DriveAndCount_SM3" tagName="kcg_tag_SSM_ST_CountSM_DriveAndCount_SM3">
+          <value id="148" name="SSM_st_Wait_CountSM_DriveAndCount_SM3"/>
+          <value id="149" name="SSM_st_Count_CountSM_DriveAndCount_SM3"/>
+          <value id="150" name="SSM_st_Init_CountSM_DriveAndCount_SM3"/>
         </enum>
-        <enum id="148" name="SSM_TR_CountSM_DriveAndCount_SM3" tagName="kcg_tag_SSM_TR_CountSM_DriveAndCount_SM3">
-          <value id="149" name="SSM_TR_no_trans_CountSM_DriveAndCount_SM3"/>
-          <value id="150" name="SSM_TR_Wait_Count_1_Wait_CountSM_DriveAndCount_SM3"/>
-          <value id="151" name="SSM_TR_Count_Wait_1_Count_CountSM_DriveAndCount_SM3"/>
+        <enum id="151" name="SSM_TR_CountSM_DriveAndCount_SM3" tagName="kcg_tag_SSM_TR_CountSM_DriveAndCount_SM3">
+          <value id="152" name="SSM_TR_no_trans_CountSM_DriveAndCount_SM3"/>
+          <value id="153" name="SSM_TR_Wait_Count_1_Wait_CountSM_DriveAndCount_SM3"/>
+          <value id="154" name="SSM_TR_Count_Wait_1_Count_CountSM_DriveAndCount_SM3"/>
+          <value id="155" name="SSM_TR_Init_Wait_1_Init_CountSM_DriveAndCount_SM3"/>
         </enum>
-        <enum id="152" name="SSM_ST_SM3" tagName="kcg_tag_SSM_ST_SM3">
-          <value id="153" name="SSM_st_DriveAndCount_SM3"/>
-          <value id="154" name="SSM_st_Stop_SM3"/>
-          <value id="155" name="SSM_st_Kick_SM3"/>
-          <value id="156" name="SSM_st_State9_SM3"/>
-          <value id="157" name="SSM_st_Free_SM3"/>
+        <enum id="156" name="SSM_ST_SM3" tagName="kcg_tag_SSM_ST_SM3">
+          <value id="157" name="SSM_st_DriveAndCount_SM3"/>
+          <value id="158" name="SSM_st_Stop_SM3"/>
+          <value id="159" name="SSM_st_Kick_SM3"/>
+          <value id="160" name="SSM_st_Kicking_SM3"/>
+          <value id="161" name="SSM_st_Free_SM3"/>
         </enum>
-        <enum id="158" name="SSM_TR_SM3" tagName="kcg_tag_SSM_TR_SM3">
-          <value id="159" name="SSM_TR_no_trans_SM3"/>
-          <value id="160" name="SSM_TR_DriveAndCount_Free_1_DriveAndCount_SM3"/>
-          <value id="161" name="SSM_TR_Stop_DriveAndCount_1_Stop_SM3"/>
-          <value id="162" name="SSM_TR_Kick_State9_1_Kick_SM3"/>
-          <value id="163" name="SSM_TR_State9_Kick_1_State9_SM3"/>
-          <value id="164" name="SSM_TR_State9_Stop_2_State9_SM3"/>
-          <value id="165" name="SSM_TR_Free_State9_1_Free_SM3"/>
+        <enum id="162" name="SSM_TR_SM3" tagName="kcg_tag_SSM_TR_SM3">
+          <value id="163" name="SSM_TR_no_trans_SM3"/>
+          <value id="164" name="SSM_TR_DriveAndCount_Free_1_DriveAndCount_SM3"/>
+          <value id="165" name="SSM_TR_Stop_DriveAndCount_1_Stop_SM3"/>
+          <value id="166" name="SSM_TR_Kick_Kicking_1_Kick_SM3"/>
+          <value id="167" name="SSM_TR_Kicking_Kick_1_Kicking_SM3"/>
+          <value id="168" name="SSM_TR_Kicking_Stop_2_Kicking_SM3"/>
+          <value id="169" name="SSM_TR_Free_Kicking_1_Free_SM3"/>
         </enum>
-        <enum id="166" name="TruthTableValues_truthtables" tagName="kcg_tag_TruthTableValues_truthtables">
-          <value id="167" name="T_truthtables"/>
-          <value id="168" name="F_truthtables"/>
-          <value id="169" name="X_truthtables"/>
+        <enum id="170" name="TruthTableValues_truthtables" tagName="kcg_tag_TruthTableValues_truthtables">
+          <value id="171" name="T_truthtables"/>
+          <value id="172" name="F_truthtables"/>
+          <value id="173" name="X_truthtables"/>
         </enum>
-        <macro id="170" name="kcg_assign_array"/>
-        <macro id="171" name="kcg_assign_struct"/>
-        <macro id="172" name="kcg_lnot_uint8"/>
-        <macro id="173" name="kcg_lnot_uint16"/>
-        <macro id="174" name="kcg_lnot_uint32"/>
-        <macro id="175" name="kcg_lnot_uint64"/>
-        <macro id="176" name="kcg_lsl_uint8"/>
-        <macro id="177" name="kcg_lsl_uint16"/>
-        <macro id="178" name="kcg_lsl_uint32"/>
-        <macro id="179" name="kcg_lsl_uint64"/>
-        <macro id="180" name="kcg_true"/>
-        <macro id="181" name="kcg_false"/>
-        <macro id="182" name="kcg_lit_int8"/>
-        <macro id="183" name="kcg_lit_int16"/>
-        <macro id="184" name="kcg_lit_int32"/>
-        <macro id="185" name="kcg_lit_int64"/>
-        <macro id="186" name="kcg_lit_uint8"/>
-        <macro id="187" name="kcg_lit_uint16"/>
-        <macro id="188" name="kcg_lit_uint32"/>
-        <macro id="189" name="kcg_lit_uint64"/>
-        <macro id="190" name="kcg_lit_size"/>
-        <macro id="191" name="kcg_lit_float64"/>
-        <macro id="192" name="kcg_lit_float32"/>
-        <predefType id="193" name="kcg_int8"/>
-        <predefType id="194" name="kcg_int16"/>
-        <predefType id="195" name="kcg_int32"/>
-        <predefType id="196" name="kcg_int64"/>
-        <predefType id="197" name="kcg_uint8"/>
-        <predefType id="198" name="kcg_uint16"/>
-        <predefType id="199" name="kcg_uint32"/>
-        <predefType id="200" name="kcg_uint64"/>
-        <predefType id="201" name="kcg_size"/>
-        <predefType id="202" name="kcg_float64"/>
-        <predefType id="203" name="kcg_float32"/>
-        <predefType id="204" name="kcg_bool"/>
-        <predefType id="205" name="kcg_char"/>
-        <macro id="206" name="KCG_MAPW_CPY"/>
+        <macro id="174" name="kcg_assign_array"/>
+        <macro id="175" name="kcg_assign_struct"/>
+        <macro id="176" name="kcg_lnot_uint8"/>
+        <macro id="177" name="kcg_lnot_uint16"/>
+        <macro id="178" name="kcg_lnot_uint32"/>
+        <macro id="179" name="kcg_lnot_uint64"/>
+        <macro id="180" name="kcg_lsl_uint8"/>
+        <macro id="181" name="kcg_lsl_uint16"/>
+        <macro id="182" name="kcg_lsl_uint32"/>
+        <macro id="183" name="kcg_lsl_uint64"/>
+        <macro id="184" name="kcg_true"/>
+        <macro id="185" name="kcg_false"/>
+        <macro id="186" name="kcg_lit_int8"/>
+        <macro id="187" name="kcg_lit_int16"/>
+        <macro id="188" name="kcg_lit_int32"/>
+        <macro id="189" name="kcg_lit_int64"/>
+        <macro id="190" name="kcg_lit_uint8"/>
+        <macro id="191" name="kcg_lit_uint16"/>
+        <macro id="192" name="kcg_lit_uint32"/>
+        <macro id="193" name="kcg_lit_uint64"/>
+        <macro id="194" name="kcg_lit_size"/>
+        <macro id="195" name="kcg_lit_float64"/>
+        <macro id="196" name="kcg_lit_float32"/>
+        <predefType id="197" name="kcg_int8"/>
+        <predefType id="198" name="kcg_int16"/>
+        <predefType id="199" name="kcg_int32"/>
+        <predefType id="200" name="kcg_int64"/>
+        <predefType id="201" name="kcg_uint8"/>
+        <predefType id="202" name="kcg_uint16"/>
+        <predefType id="203" name="kcg_uint32"/>
+        <predefType id="204" name="kcg_uint64"/>
+        <predefType id="205" name="kcg_size"/>
+        <predefType id="206" name="kcg_float64"/>
+        <predefType id="207" name="kcg_float32"/>
+        <predefType id="208" name="kcg_bool"/>
+        <predefType id="209" name="kcg_char"/>
+        <macro id="210" name="KCG_MAPW_CPY"/>
       </file>
-      <file id="207" name="kcg_consts.h"/>
-      <file id="208" name="kcg_sensors.h"/>
+      <file id="211" name="kcg_consts.h"/>
+      <file id="212" name="kcg_sensors.h"/>
     </c>
-    <map srcId="202" dstId="191" role="wrapped-lit"/>
+    <map srcId="206" dstId="195" role="wrapped-lit"/>
+    <map srcId="207" dstId="196" role="wrapped-lit"/>
+    <map srcId="205" dstId="194" role="wrapped-lit"/>
+    <map srcId="204" dstId="193" role="wrapped-lit"/>
+    <map srcId="204" dstId="179" role="wrapped-lnot"/>
+    <map srcId="204" dstId="183" role="wrapped-lsl"/>
     <map srcId="203" dstId="192" role="wrapped-lit"/>
+    <map srcId="203" dstId="178" role="wrapped-lnot"/>
+    <map srcId="203" dstId="182" role="wrapped-lsl"/>
+    <map srcId="202" dstId="191" role="wrapped-lit"/>
+    <map srcId="202" dstId="177" role="wrapped-lnot"/>
+    <map srcId="202" dstId="181" role="wrapped-lsl"/>
     <map srcId="201" dstId="190" role="wrapped-lit"/>
+    <map srcId="201" dstId="176" role="wrapped-lnot"/>
+    <map srcId="201" dstId="180" role="wrapped-lsl"/>
     <map srcId="200" dstId="189" role="wrapped-lit"/>
-    <map srcId="200" dstId="175" role="wrapped-lnot"/>
-    <map srcId="200" dstId="179" role="wrapped-lsl"/>
     <map srcId="199" dstId="188" role="wrapped-lit"/>
-    <map srcId="199" dstId="174" role="wrapped-lnot"/>
-    <map srcId="199" dstId="178" role="wrapped-lsl"/>
     <map srcId="198" dstId="187" role="wrapped-lit"/>
-    <map srcId="198" dstId="173" role="wrapped-lnot"/>
-    <map srcId="198" dstId="177" role="wrapped-lsl"/>
     <map srcId="197" dstId="186" role="wrapped-lit"/>
-    <map srcId="197" dstId="172" role="wrapped-lnot"/>
-    <map srcId="197" dstId="176" role="wrapped-lsl"/>
-    <map srcId="196" dstId="185" role="wrapped-lit"/>
-    <map srcId="195" dstId="184" role="wrapped-lit"/>
-    <map srcId="194" dstId="183" role="wrapped-lit"/>
-    <map srcId="193" dstId="182" role="wrapped-lit"/>
   </generated>
-  <map modelId="91" generatedId="169"/>
-  <map modelId="90" generatedId="168"/>
-  <map modelId="89" generatedId="167"/>
-  <map modelId="74" generatedId="164"/>
-  <map modelId="54" generatedId="160"/>
-  <map modelId="51" generatedId="151"/>
-  <map modelId="48" generatedId="150"/>
-  <map modelId="45" generatedId="149" role="autom-no-trans-enum"/>
-  <map modelId="68" generatedId="144"/>
+  <map modelId="91" generatedId="173"/>
+  <map modelId="90" generatedId="172"/>
+  <map modelId="89" generatedId="171"/>
+  <map modelId="76" generatedId="166"/>
+  <map modelId="57" generatedId="164"/>
+  <map modelId="55" generatedId="155"/>
+  <map modelId="51" generatedId="154"/>
+  <map modelId="48" generatedId="153"/>
+  <map modelId="45" generatedId="152" role="autom-no-trans-enum"/>
+  <map modelId="73" generatedId="146"/>
+  <map modelId="70" generatedId="145"/>
+  <map modelId="67" generatedId="144"/>
   <map modelId="65" generatedId="143"/>
-  <map modelId="62" generatedId="142"/>
-  <map modelId="59" generatedId="141" role="autom-no-trans-enum"/>
-  <map modelId="49" generatedId="147"/>
-  <map modelId="46" generatedId="146"/>
+  <map modelId="62" generatedId="142" role="autom-no-trans-enum"/>
+  <map modelId="49" generatedId="149"/>
+  <map modelId="46" generatedId="148"/>
+  <map modelId="53" generatedId="150"/>
+  <map modelId="68" generatedId="138"/>
+  <map modelId="71" generatedId="139"/>
+  <map modelId="74" generatedId="140"/>
   <map modelId="63" generatedId="137"/>
-  <map modelId="66" generatedId="138"/>
-  <map modelId="69" generatedId="139"/>
-  <map modelId="60" generatedId="136"/>
-  <map modelId="55" generatedId="154"/>
-  <map modelId="57" generatedId="161"/>
-  <map modelId="44" generatedId="153"/>
-  <map modelId="71" generatedId="162"/>
-  <map modelId="76" generatedId="163"/>
-  <map modelId="58" generatedId="155"/>
-  <map modelId="43" generatedId="159" role="autom-no-trans-enum"/>
-  <map modelId="77" generatedId="157"/>
-  <map modelId="79" generatedId="165"/>
-  <map modelId="72" generatedId="156"/>
+  <map modelId="60" generatedId="165"/>
+  <map modelId="44" generatedId="157"/>
+  <map modelId="82" generatedId="168"/>
+  <map modelId="58" generatedId="158"/>
+  <map modelId="80" generatedId="167"/>
+  <map modelId="61" generatedId="159"/>
+  <map modelId="43" generatedId="163" role="autom-no-trans-enum"/>
+  <map modelId="83" generatedId="161"/>
+  <map modelId="85" generatedId="169"/>
+  <map modelId="78" generatedId="160"/>
   <map modelId="14" generatedId="109" role="context-parameter"/>
   <map modelId="14" generatedId="108" role="init-method"/>
   <map modelId="14" generatedId="111" role="context-parameter"/>
   <map modelId="14" generatedId="110" role="reset-method"/>
   <map modelId="14" generatedId="113" role="input-struct-parameter"/>
-  <map modelId="20" generatedId="133"/>
-  <map modelId="30" generatedId="133"/>
-  <map modelId="19" generatedId="132"/>
+  <map modelId="20" generatedId="134"/>
+  <map modelId="27" generatedId="134"/>
+  <map modelId="19" generatedId="133"/>
+  <map modelId="18" generatedId="132"/>
   <map modelId="29" generatedId="132"/>
-  <map modelId="18" generatedId="131"/>
+  <map modelId="17" generatedId="131"/>
   <map modelId="28" generatedId="131"/>
-  <map modelId="17" generatedId="130"/>
-  <map modelId="81" generatedId="130"/>
-  <map modelId="16" generatedId="129"/>
-  <map modelId="26" generatedId="129"/>
-  <map modelId="15" generatedId="128"/>
-  <map modelId="32" generatedId="128"/>
-  <map modelId="38" generatedId="128"/>
-  <map modelId="14" generatedId="127" role="input-struct-type"/>
+  <map modelId="16" generatedId="130"/>
+  <map modelId="26" generatedId="130"/>
+  <map modelId="15" generatedId="129"/>
+  <map modelId="32" generatedId="129"/>
+  <map modelId="38" generatedId="129"/>
+  <map modelId="14" generatedId="128" role="input-struct-type"/>
   <map modelId="14" generatedId="114" role="context-parameter"/>
-  <map modelId="43" generatedId="126" role="memory"/>
-  <map modelId="59" generatedId="126" role="memory"/>
-  <map modelId="60" generatedId="126" role="memory"/>
-  <map modelId="63" generatedId="126" role="memory"/>
-  <map modelId="66" generatedId="126" role="memory"/>
-  <map modelId="43" generatedId="124" role="memory"/>
-  <map modelId="45" generatedId="124" role="memory"/>
-  <map modelId="49" generatedId="124" role="memory"/>
-  <map modelId="52" generatedId="124" role="memory"/>
+  <map modelId="45" generatedId="127" role="init"/>
+  <map modelId="62" generatedId="126" role="init"/>
+  <map modelId="45" generatedId="125" role="autom-next-state"/>
+  <map modelId="62" generatedId="124" role="autom-next-state"/>
   <map modelId="43" generatedId="123" role="autom-next-state"/>
-  <map modelId="59" generatedId="122" role="autom-next-state"/>
-  <map modelId="45" generatedId="121" role="autom-next-state"/>
-  <map modelId="59" generatedId="120" role="init"/>
-  <map modelId="45" generatedId="119" role="init"/>
+  <map modelId="43" generatedId="122" role="memory"/>
+  <map modelId="45" generatedId="122" role="memory"/>
+  <map modelId="49" generatedId="122" role="memory"/>
+  <map modelId="53" generatedId="122" role="memory"/>
+  <map modelId="52" generatedId="122" role="memory"/>
+  <map modelId="43" generatedId="120" role="memory"/>
+  <map modelId="62" generatedId="120" role="memory"/>
+  <map modelId="68" generatedId="120" role="memory"/>
+  <map modelId="71" generatedId="120" role="memory"/>
+  <map modelId="66" generatedId="120" role="memory"/>
+  <map modelId="77" generatedId="119" role="memory"/>
   <map modelId="23" generatedId="118"/>
   <map modelId="22" generatedId="117"/>
   <map modelId="21" generatedId="116"/>
-  <map modelId="43" generatedId="116" role="memory"/>
-  <map modelId="45" generatedId="116" role="memory"/>
   <map modelId="14" generatedId="115" role="context-type"/>
   <map modelId="14" generatedId="107" role="interface-file"/>
   <map modelId="14" generatedId="112" role="cycle-method"/>
-  <map modelId="88" generatedId="166"/>
-  <map modelId="43" generatedId="158" role="autom-transitions-type"/>
-  <map modelId="43" generatedId="152" role="autom-states-type"/>
-  <map modelId="45" generatedId="148" role="autom-transitions-type"/>
-  <map modelId="45" generatedId="145" role="autom-states-type"/>
-  <map modelId="59" generatedId="140" role="autom-transitions-type"/>
-  <map modelId="59" generatedId="135" role="autom-states-type"/>
-  <map modelId="2" generatedId="205"/>
-  <map modelId="1" generatedId="204"/>
-  <map modelId="12" generatedId="202"/>
-  <map modelId="11" generatedId="203"/>
-  <map modelId="13" generatedId="201"/>
-  <map modelId="10" generatedId="200"/>
-  <map modelId="9" generatedId="199"/>
-  <map modelId="8" generatedId="198"/>
-  <map modelId="7" generatedId="197"/>
-  <map modelId="6" generatedId="196"/>
-  <map modelId="5" generatedId="195"/>
-  <map modelId="4" generatedId="194"/>
-  <map modelId="3" generatedId="193"/>
+  <map modelId="88" generatedId="170"/>
+  <map modelId="43" generatedId="162" role="autom-transitions-type"/>
+  <map modelId="43" generatedId="156" role="autom-states-type"/>
+  <map modelId="45" generatedId="151" role="autom-transitions-type"/>
+  <map modelId="45" generatedId="147" role="autom-states-type"/>
+  <map modelId="62" generatedId="141" role="autom-transitions-type"/>
+  <map modelId="62" generatedId="136" role="autom-states-type"/>
+  <map modelId="2" generatedId="209"/>
+  <map modelId="1" generatedId="208"/>
+  <map modelId="12" generatedId="206"/>
+  <map modelId="11" generatedId="207"/>
+  <map modelId="13" generatedId="205"/>
+  <map modelId="10" generatedId="204"/>
+  <map modelId="9" generatedId="203"/>
+  <map modelId="8" generatedId="202"/>
+  <map modelId="7" generatedId="201"/>
+  <map modelId="6" generatedId="200"/>
+  <map modelId="5" generatedId="199"/>
+  <map modelId="4" generatedId="198"/>
+  <map modelId="3" generatedId="197"/>
 </mapping>
 <!--$********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** mapping.xml
-** Generation date: 2017-09-21T15:37:53
+** Generation date: 2017-09-26T15:13:06
 *************************************************************$-->

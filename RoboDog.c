@@ -95,23 +95,28 @@ TASK(OSEK_Task_Background)
 	
 	int armcount = 0;
 	
+	kcg_bool isCounting = kcg_true;
+	
 	while(1)
 	{
 		//input.ColorSenser = ecrobot_get_sonar_sensor(NXT_PORT_S2);
 		//U16 light = ecrobot_get_light_sensor(NXT_PORT_S1);
 		S32 sonar = ecrobot_get_sonar_sensor(NXT_PORT_S2);
 		addValue(values, index, sonar);
+		
 		input.AverageSonar = average(values, size);
-		
 		input.Start = ecrobot_get_touch_sensor(NXT_PORT_S1);
+		int colorSensor = ecrobot_get_light_sensor(NXT_PORT_S3);
+		input.Stop = colorSensor > 570;
 		
-		input.ColorSensor = ecrobot_get_light_sensor(NXT_PORT_S3);
+		if (input.Stop) 
+		{
+			ecrobot_sound_tone(100, 250, 100);
+		}
 		
-		input.KickForward = ecrobot_get_touch_sensor(NXT_PORT_S1);
 		
 		/* this function computes next step, returns current outputs */
 		StateMachine(&input, &result);
-		
 		
 		index = (index + 1) % size;
 		
@@ -130,16 +135,18 @@ TASK(OSEK_Task_Background)
 		
 		display_goto_xy(0, 3);
 		display_string("Color: ");
-		display_int(input.ColorSensor, 7);
+		display_int(colorSensor, 7);
 		
 		display_goto_xy(0, 4);
 		display_string("Stop: ");
+		
+		display_goto_xy(0, 5);
+		display_string("Kicks: ");
+		display_int(input.KickCountValue, 7);
 		//display_int(result.Output3, 7);
 		
 		ecrobot_set_motor_speed(NXT_PORT_A, result.SpeedValue);
-		
-		ecrobot_set_motor_speed(NXT_PORT_B, result.ArmSpeedValue);
-		
+
 		display_update();
 		
 		// Pieper!
@@ -149,24 +156,46 @@ TASK(OSEK_Task_Background)
 			ecrobot_sound_tone(500, 250, 100);
 		}
 
-		if (result.ArmSpeedValue > 0) 
+		
+		if (result.ArmSpeedValue == 0) 
 		{
-			input.KickFinished = kcg_false;
-			armcount++;
-		} 
-		else if (result.ArmSpeedValue < 0) 
-		{
-			armcount--;
+			input.KickMoveFinished = kcg_false;
+			input.KickMoveBackward = kcg_false;
+			armcount = 0;
 		}
 		
-		if (armcount == 15) 
+		if (result.ArmSpeedValue > 0) 
 		{
-			input.KickBackward = kcg_true;
+			armcount++;
+			if (armcount >= 10) 
+			{
+				input.KickMoveBackward = kcg_true;
+			} 
 		} 
-		else if (armcount == 0) 
+		
+		if (result.ArmSpeedValue < 0) 
 		{
-			input.KickBackward = kcg_false;
-			input.KickFinished = kcg_true;
+			armcount--;
+			if (armcount <= 0) 
+			{
+				input.KickMoveBackward = kcg_false;
+				input.KickMoveFinished = kcg_true;
+			}
+		}
+		
+		ecrobot_set_motor_speed(NXT_PORT_B, result.ArmSpeedValue);
+		
+		if (result.SpeedValue < 0 && input.Stop) 
+		{
+			ecrobot_sound_tone(1000, 250, 100);
+			
+			if (result.CountValue == 2 || result.CountValue == 5) {
+				input.KickCountValue = 2;
+			} 
+			else 
+			{
+				input.KickCountValue = 1;
+			}
 		}
 		
 		/* wait for sone_int_value msec */

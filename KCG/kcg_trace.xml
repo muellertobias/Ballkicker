@@ -45,17 +45,17 @@
     <RootNode headerFile="StateMachine.h" scadeName="StateMachine" targetCycleFct="StateMachine" targetInitFct="StateMachine_reset" targetInitializationFct="StateMachine_init">
       <Input inCtx="true" scadeName="AverageSonar" scadeType="int16" targetName="AverageSonar" targetType="kcg_int16"/>
       <Input inCtx="true" scadeName="Start" scadeType="bool" targetName="Start" targetType="kcg_bool"/>
-      <Input inCtx="true" scadeName="ColorSensor" scadeType="int16" targetName="ColorSensor" targetType="kcg_int16"/>
-      <Input inCtx="true" scadeName="KickForward" scadeType="bool" targetName="KickForward" targetType="kcg_bool"/>
-      <Input inCtx="true" scadeName="KickBackward" scadeType="bool" targetName="KickBackward" targetType="kcg_bool"/>
-      <Input inCtx="true" scadeName="KickFinished" scadeType="bool" targetName="KickFinished" targetType="kcg_bool"/>
+      <Input inCtx="true" scadeName="KickMoveBackward" scadeType="bool" targetName="KickMoveBackward" targetType="kcg_bool"/>
+      <Input inCtx="true" scadeName="KickMoveFinished" scadeType="bool" targetName="KickMoveFinished" targetType="kcg_bool"/>
+      <Input inCtx="true" scadeName="KickCountValue" scadeType="int16" targetName="KickCountValue" targetType="kcg_int16"/>
+      <Input inCtx="true" scadeName="Stop" scadeType="bool" targetName="Stop" targetType="kcg_bool"/>
       <Output inCtx="true" scadeName="CountValue" scadeType="uint32" targetName="CountValue" targetType="kcg_uint32"/>
       <Output inCtx="true" scadeName="SpeedValue" scadeType="int16" targetName="SpeedValue" targetType="kcg_int16"/>
       <Output inCtx="true" scadeName="ArmSpeedValue" scadeType="int16" targetName="ArmSpeedValue" targetType="kcg_int16"/>
       <Signal scadeName="StartSignal" targetName="Start"/>
-      <Signal scadeName="KickForwardSignal" targetName="KickForward"/>
-      <Signal scadeName="KickBackwardSignal" targetName="KickBackward"/>
-      <Signal scadeName="KickFinishedSignal" targetName="KickFinished"/>
+      <Signal scadeName="StopSignal" targetName="Stop"/>
+      <Signal scadeName="KickMoveBackwardSignal" targetName="KickMoveBackward"/>
+      <Signal scadeName="KickMoveFinishedSignal" targetName="KickMoveFinished"/>
       <NodeInlining instName="1" scadeName="math::InRangeOutIn">
         <Input inCtx="true" scadeName="IROI_Input" scadeType="int16" targetName="AverageSonar" targetType="kcg_int16"/>
         <Assume scadeName="A1" targetName=""/>
@@ -82,6 +82,12 @@
                 </Action>
               </Fork>
             </State>
+            <State scadeName="Init" targetName="SSM_st_Init_CountSM_DriveAndCount_SM3">
+              <Fork priority="1">
+                <Condition/>
+                <Transition kind="strong" scadeDest="Wait" targetName="SSM_TR_Init_Wait_1_Init_CountSM_DriveAndCount_SM3"/>
+              </Fork>
+            </State>
             <NextState inCtx="true" mem="true" targetName="CountSM_state_nxt_DriveAndCount_SM3"/>
           </Automaton>
           <Fork priority="1">
@@ -102,6 +108,10 @@
                 <Condition/>
                 <Transition kind="strong" scadeDest="Forward" targetName="SSM_TR_DriveBack_Forward_1_DriveBack_Kicking_Kick_SM3"/>
               </Fork>
+              <Fork priority="2">
+                <Condition/>
+                <Transition kind="strong" scadeDest="Finish" targetName="SSM_TR_DriveBack_Finish_2_DriveBack_Kicking_Kick_SM3"/>
+              </Fork>
             </State>
             <State scadeName="Forward" targetName="SSM_st_Forward_Kicking_Kick_SM3">
               <Fork priority="1">
@@ -112,44 +122,43 @@
             <State scadeName="Backward" targetName="SSM_st_Backward_Kicking_Kick_SM3">
               <Fork priority="1">
                 <Condition/>
-                <Transition kind="strong" scadeDest="State11" targetName="SSM_TR_Backward_State11_1_Backward_Kicking_Kick_SM3"/>
+                <Transition kind="strong" scadeDest="Finish" targetName="SSM_TR_Backward_Finish_1_Backward_Kicking_Kick_SM3"/>
               </Fork>
             </State>
-            <State scadeName="State11" targetName="SSM_st_State11_Kicking_Kick_SM3"/>
+            <State scadeName="Finish" targetName="SSM_st_Finish_Kicking_Kick_SM3"/>
             <NextState inCtx="true" mem="true" targetName="Kicking_state_nxt_Kick_SM3"/>
           </Automaton>
           <Fork priority="1">
             <Condition/>
-            <Transition kind="strong" scadeDest="State9" targetName="SSM_TR_Kick_State9_1_Kick_SM3"/>
+            <Transition kind="weak" scadeDest="Kicking" targetName="SSM_TR_Kick_Kicking_1_Kick_SM3"/>
+            <Action>
+              <Last/>
+            </Action>
           </Fork>
         </State>
-        <State scadeName="State9" targetName="SSM_st_State9_SM3">
-          <Fork priority="2">
-            <Condition/>
-            <Transition kind="weak" scadeDest="Stop" targetName="SSM_TR_State9_Stop_2_State9_SM3"/>
-          </Fork>
+        <State scadeName="Kicking" targetName="SSM_st_Kicking_SM3">
           <Fork priority="1">
             <Condition/>
-            <Transition kind="strong" scadeDest="Kick" targetName="SSM_TR_State9_Kick_1_State9_SM3"/>
+            <Transition kind="strong" scadeDest="Kick" targetName="SSM_TR_Kicking_Kick_1_Kicking_SM3"/>
+          </Fork>
+          <Fork priority="2">
+            <Condition/>
+            <Transition kind="strong" scadeDest="Stop" targetName="SSM_TR_Kicking_Stop_2_Kicking_SM3"/>
           </Fork>
         </State>
         <State scadeName="Free" targetName="SSM_st_Free_SM3">
           <Fork priority="1">
             <Condition/>
-            <Transition kind="strong" scadeDest="State9" targetName="SSM_TR_Free_State9_1_Free_SM3"/>
+            <Transition kind="strong" scadeDest="Kicking" targetName="SSM_TR_Free_Kicking_1_Free_SM3"/>
           </Fork>
         </State>
         <NextState inCtx="true" mem="true" targetName="SM3_state_nxt"/>
       </Automaton>
-      <NodeInlining instName="2" scadeName="math::InRangeInOut">
-        <Input inCtx="true" scadeName="IRIO_Input" scadeType="int16" targetName="ColorSensor" targetType="kcg_int16"/>
-        <Assume scadeName="A1" targetName=""/>
-      </NodeInlining>
-      <Memory inCtx="true" targetName="CountValue" targetType="kcg_uint32"/>
+      <Memory inCtx="true" targetName="_kicks" targetType="kcg_int16"/>
+      <Memory inCtx="true" targetName="ArmSpeed" targetType="kcg_int16"/>
+      <Memory inCtx="true" targetName="Counting" targetType="kcg_uint32"/>
       <Init inCtx="true" targetName="init" targetType="kcg_bool"/>
       <Init inCtx="true" targetName="init1" targetType="kcg_bool"/>
-      <Memory inCtx="true" targetName="Counting" targetType="kcg_uint32"/>
-      <Memory inCtx="true" targetName="ArmSpeed" targetType="kcg_int16"/>
       <OutCtxType targetName="outC_StateMachine"/>
       <InCtxType targetName="inC_StateMachine"/>
     </RootNode>

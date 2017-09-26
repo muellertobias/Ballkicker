@@ -1,43 +1,46 @@
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-21T15:37:48
+** Generation date: 2017-09-26T15:12:52
 *************************************************************$ */
 
 /* xscade source: D:/Development/Scadet/RobotTar/Operator1.xscade */
 node StateMachine(
     AverageSonar : int16 last = 0;
     Start : bool;
-    ColorSensor : int16 last = 0;
-    KickForward : bool last = false;
-    KickBackward : bool;
-    KickFinished : bool)
+    KickMoveBackward : bool;
+    KickMoveFinished : bool;
+    KickCountValue : int16 last = 0;
+    Stop : bool last = false)
   returns (
     CountValue : uint32 last = 0;
     SpeedValue : int16 last = 0;
     ArmSpeedValue : int16 last = 0)
 sig
-  OnBallSignal, OffBallSignal, StartSignal, StopSignal, KickForwardSignal,
-  KickBackwardSignal, KickFinishedSignal;
+  OnBallSignal, OffBallSignal, StartSignal, StopSignal, KickMoveBackwardSignal,
+  KickMoveFinishedSignal, KickingFinishedSignal;
 var
   Counting : uint32 last = 0;
   Speed : int16 last = 0;
   ArmSpeed : int16 last = 0;
+  _kicks : int16 last = 0;
   _L1 : int16;
   _L9 : bool;
   _L14 : bool;
   _L15 : bool;
-  _L16 : int16;
-  _L18 : bool;
-  _L21 : bool;
   _L22 : bool;
   _L23 : int16;
   _L25 : bool;
   _L26 : int16;
+  _L27 : uint32;
+  _L32 : int16;
+  _L35 : bool;
+  _L38 : int16;
+  _L44 : bool;
 let
   _L1= AverageSonar;
-  _L9= #1 math::InRangeOutIn(_L1, 0, 12);
+  _L9= #1 math::InRangeOutIn(_L1, 0, 15);
   emit 'OnBallSignal if _L14;
-  _L14= #1 math::InRangeInOut(_L1, 13, 256);
+  _L14= #1 math::InRangeInOut(_L1, 16, 256);
   emit 'OffBallSignal if _L9;
   emit 'StartSignal if _L15;
   _L15= Start;
@@ -47,20 +50,22 @@ let
       let
 
         automaton CountSM
-          initial state Wait
+          state Wait
             unless
               if 'OnBallSignal do let tel restart Count;
-            var
-              _L1 : uint32;
             let
-              _L1= Counting;
-              CountValue= _L1;
             tel
 
           state Count
             unless
               if 'OffBallSignal
                 do let Counting= last 'Counting #8 + 1; tel restart Wait;
+            let
+            tel
+
+          initial state Init
+            unless
+              if 'StartSignal do let Counting= 0; tel restart Wait;
             let
             tel
         returns ..;
@@ -75,63 +80,67 @@ let
       tel
 
     state Kick
-      unless
-        if 'OffBallSignal do let Speed= - 20; tel restart State9;
       let
 
         automaton Kicking
           initial state DriveBack
             unless
               if 'OnBallSignal do let ArmSpeed= 50; tel restart Forward;
+              if 'KickingFinishedSignal restart Finish;
             let
             tel
 
           state Forward
             unless
-              if 'KickBackwardSignal
+              if 'KickMoveBackwardSignal
                 do let ArmSpeed= - 50; tel restart Backward;
             let
             tel
 
           state Backward
             unless
-              if 'KickFinishedSignal do let ArmSpeed= 0; tel restart State11;
+              if 'OffBallSignal do let ArmSpeed= 0; tel restart Finish;
             let
             tel
 
-          state State11
+          state Finish
             let
             tel
         returns ..;
       tel
+      until
+        if 'OffBallSignal
+          do let Speed= - 20; _kicks= last '_kicks #14 + 1; tel restart Kicking;
 
-    state State9
+    state Kicking
       unless
         if 'OnBallSignal do let Speed= 0; tel restart Kick;
+        if 'StopSignal do let Speed= 0; tel restart Stop;
       let
       tel
-      until
-        if 'StopSignal do let Speed= 0; tel restart Stop;
 
     state Free
       unless
-        if 'StopSignal #6 = false restart State9;
+        if 'StopSignal #6 = false do let _kicks= 0; tel restart Kicking;
       let
       tel
   returns ..;
-  _L16= ColorSensor;
-  _L18= #2 math::InRangeInOut(_L16, 570, 1024);
-  emit 'StopSignal if _L18;
-  emit 'KickForwardSignal if _L21;
-  _L21= KickForward;
-  _L22= KickBackward;
-  emit 'KickBackwardSignal if _L22;
+  emit 'StopSignal if _L35;
+  _L22= KickMoveBackward;
+  emit 'KickMoveBackwardSignal if _L22;
   _L23= ArmSpeed;
   ArmSpeedValue= _L23;
-  _L25= KickFinished;
-  emit 'KickFinishedSignal if _L25;
+  _L25= KickMoveFinished;
+  emit 'KickMoveFinishedSignal if _L25;
   SpeedValue= _L26;
   _L26= Speed;
+  _L27= Counting;
+  CountValue= _L27;
+  _L32= KickCountValue;
+  emit 'KickingFinishedSignal if _L44;
+  _L35= Stop;
+  _L38= _kicks;
+  _L44= _L38 #1 >= _L32;
 tel
 
 
@@ -4913,5 +4922,5 @@ end;
 
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** -
-** Generation date: 2017-09-21T15:37:48
+** Generation date: 2017-09-26T15:12:52
 *************************************************************$ */

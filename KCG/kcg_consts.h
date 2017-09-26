@@ -1,6 +1,6 @@
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-21T15:37:52
+** Generation date: 2017-09-26T15:13:06
 *************************************************************$ */
 #ifndef _KCG_CONSTS_H_
 #define _KCG_CONSTS_H_
@@ -10,6 +10,6 @@
 #endif /* _KCG_CONSTS_H_ */
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** kcg_consts.h
-** Generation date: 2017-09-21T15:37:52
+** Generation date: 2017-09-26T15:13:06
 *************************************************************$ */
 
