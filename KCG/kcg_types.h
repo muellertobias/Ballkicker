@@ -1,6 +1,6 @@
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-26T15:13:06
+** Generation date: 2017-09-26T16:09:39
 *************************************************************$ */
 #ifndef _KCG_TYPES_H_
 #define _KCG_TYPES_H_
@@ -182,55 +182,44 @@ typedef enum kcg_tag_TruthTableValues_truthtables {
   F_truthtables,
   X_truthtables
 } TruthTableValues_truthtables;
-/* StateMachine/SM3: */
-typedef enum kcg_tag_SSM_TR_SM3 {
-  SSM_TR_no_trans_SM3,
-  SSM_TR_DriveAndCount_Free_1_DriveAndCount_SM3,
-  SSM_TR_Stop_DriveAndCount_1_Stop_SM3,
-  SSM_TR_Kick_Kicking_1_Kick_SM3,
-  SSM_TR_Kicking_Kick_1_Kicking_SM3,
-  SSM_TR_Kicking_Stop_2_Kicking_SM3,
-  SSM_TR_Free_Kicking_1_Free_SM3
-} SSM_TR_SM3;
-/* StateMachine/SM3: */
-typedef enum kcg_tag_SSM_ST_SM3 {
-  SSM_st_DriveAndCount_SM3,
-  SSM_st_Stop_SM3,
-  SSM_st_Kick_SM3,
-  SSM_st_Kicking_SM3,
-  SSM_st_Free_SM3
-} SSM_ST_SM3;
-/* StateMachine/SM3:DriveAndCount:CountSM: */
-typedef enum kcg_tag_SSM_TR_CountSM_DriveAndCount_SM3 {
-  SSM_TR_no_trans_CountSM_DriveAndCount_SM3,
-  SSM_TR_Wait_Count_1_Wait_CountSM_DriveAndCount_SM3,
-  SSM_TR_Count_Wait_1_Count_CountSM_DriveAndCount_SM3,
-  SSM_TR_Init_Wait_1_Init_CountSM_DriveAndCount_SM3
-} SSM_TR_CountSM_DriveAndCount_SM3;
-/* StateMachine/SM3:DriveAndCount:CountSM: */
-typedef enum kcg_tag_SSM_ST_CountSM_DriveAndCount_SM3 {
-  SSM_st_Wait_CountSM_DriveAndCount_SM3,
-  SSM_st_Count_CountSM_DriveAndCount_SM3,
-  SSM_st_Init_CountSM_DriveAndCount_SM3
-} SSM_ST_CountSM_DriveAndCount_SM3;
-/* StateMachine/SM3:Kick:Kicking: */
-typedef enum kcg_tag_SSM_TR_Kicking_Kick_SM3 {
-  SSM_TR_no_trans_Kicking_Kick_SM3,
-  SSM_TR_DriveBack_Forward_1_DriveBack_Kicking_Kick_SM3,
-  SSM_TR_DriveBack_Finish_2_DriveBack_Kicking_Kick_SM3,
-  SSM_TR_Forward_Backward_1_Forward_Kicking_Kick_SM3,
-  SSM_TR_Backward_Finish_1_Backward_Kicking_Kick_SM3
-} SSM_TR_Kicking_Kick_SM3;
-/* StateMachine/SM3:Kick:Kicking: */
-typedef enum kcg_tag_SSM_ST_Kicking_Kick_SM3 {
-  SSM_st_DriveBack_Kicking_Kick_SM3,
-  SSM_st_Forward_Kicking_Kick_SM3,
-  SSM_st_Backward_Kicking_Kick_SM3,
-  SSM_st_Finish_Kicking_Kick_SM3
-} SSM_ST_Kicking_Kick_SM3;
+/* StateMachine/RobotTar: */
+typedef enum kcg_tag_SSM_TR_RobotTar {
+  SSM_TR_no_trans_RobotTar,
+  SSM_TR_Count_Free_1_Count_RobotTar,
+  SSM_TR_Init_Count_1_Init_RobotTar,
+  SSM_TR_Kick_Search_1_Kick_RobotTar,
+  SSM_TR_Search_Kick_1_Search_RobotTar,
+  SSM_TR_Search_Finish_2_Search_RobotTar,
+  SSM_TR_Free_Search_1_Free_RobotTar,
+  SSM_TR_Release_Init_1_Release_RobotTar,
+  SSM_TR_Finish_Release_1_Finish_RobotTar
+} SSM_TR_RobotTar;
+/* StateMachine/RobotTar: */
+typedef enum kcg_tag_SSM_ST_RobotTar {
+  SSM_st_Count_RobotTar,
+  SSM_st_Init_RobotTar,
+  SSM_st_Kick_RobotTar,
+  SSM_st_Search_RobotTar,
+  SSM_st_Free_RobotTar,
+  SSM_st_Release_RobotTar,
+  SSM_st_Finish_RobotTar
+} SSM_ST_RobotTar;
+/* StateMachine/RobotTar:Count:CountSM: */
+typedef enum kcg_tag_SSM_TR_CountSM_Count_RobotTar {
+  SSM_TR_no_trans_CountSM_Count_RobotTar,
+  SSM_TR_Wait_Count_1_Wait_CountSM_Count_RobotTar,
+  SSM_TR_Count_Wait_1_Count_CountSM_Count_RobotTar,
+  SSM_TR_Init_Wait_1_Init_CountSM_Count_RobotTar
+} SSM_TR_CountSM_Count_RobotTar;
+/* StateMachine/RobotTar:Count:CountSM: */
+typedef enum kcg_tag_SSM_ST_CountSM_Count_RobotTar {
+  SSM_st_Wait_CountSM_Count_RobotTar,
+  SSM_st_Count_CountSM_Count_RobotTar,
+  SSM_st_Init_CountSM_Count_RobotTar
+} SSM_ST_CountSM_Count_RobotTar;
 #endif /* _KCG_TYPES_H_ */
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** kcg_types.h
-** Generation date: 2017-09-26T15:13:06
+** Generation date: 2017-09-26T16:09:39
 *************************************************************$ */
 

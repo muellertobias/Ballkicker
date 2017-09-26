@@ -1,41 +1,27 @@
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-26T15:12:52
+** Generation date: 2017-09-26T16:09:25
 *************************************************************$ */
 
 /* xscade source: D:/Development/Scadet/RobotTar/Operator1.xscade */
 node StateMachine(
     AverageSonar : int16 last = 0;
     Start : bool;
-    KickMoveBackward : bool;
-    KickMoveFinished : bool;
-    KickCountValue : int16 last = 0;
     Stop : bool last = false)
-  returns (
-    CountValue : uint32 last = 0;
-    SpeedValue : int16 last = 0;
-    ArmSpeedValue : int16 last = 0)
+  returns (CountValue : uint32 last = 0; SpeedValue : int16 last = 0)
 sig
-  OnBallSignal, OffBallSignal, StartSignal, StopSignal, KickMoveBackwardSignal,
-  KickMoveFinishedSignal, KickingFinishedSignal;
+  OnBallSignal, OffBallSignal, StartSignal, StopSignal;
 var
   Counting : uint32 last = 0;
   Speed : int16 last = 0;
-  ArmSpeed : int16 last = 0;
   _kicks : int16 last = 0;
   _L1 : int16;
   _L9 : bool;
   _L14 : bool;
   _L15 : bool;
-  _L22 : bool;
-  _L23 : int16;
-  _L25 : bool;
   _L26 : int16;
   _L27 : uint32;
-  _L32 : int16;
   _L35 : bool;
-  _L38 : int16;
-  _L44 : bool;
 let
   _L1= AverageSonar;
   _L9= #1 math::InRangeOutIn(_L1, 0, 15);
@@ -45,8 +31,8 @@ let
   emit 'StartSignal if _L15;
   _L15= Start;
 
-  automaton SM3
-    state DriveAndCount
+  automaton RobotTar
+    state Count
       let
 
         automaton CountSM
@@ -73,74 +59,54 @@ let
       until
         if 'StopSignal do let Speed= - 20; tel restart Free;
 
-    initial state Stop
+    initial state Init
       unless
-        if 'StartSignal do let Speed= 20; tel restart DriveAndCount;
+        if 'StartSignal do let Speed= 20; tel restart Count;
       let
       tel
 
     state Kick
-      let
-
-        automaton Kicking
-          initial state DriveBack
-            unless
-              if 'OnBallSignal do let ArmSpeed= 50; tel restart Forward;
-              if 'KickingFinishedSignal restart Finish;
-            let
-            tel
-
-          state Forward
-            unless
-              if 'KickMoveBackwardSignal
-                do let ArmSpeed= - 50; tel restart Backward;
-            let
-            tel
-
-          state Backward
-            unless
-              if 'OffBallSignal do let ArmSpeed= 0; tel restart Finish;
-            let
-            tel
-
-          state Finish
-            let
-            tel
-        returns ..;
-      tel
-      until
+      unless
         if 'OffBallSignal
-          do let Speed= - 20; _kicks= last '_kicks #14 + 1; tel restart Kicking;
+          do let Speed= - 20; _kicks= last '_kicks #1 - 1; tel restart Search;
+      let
+      tel
 
-    state Kicking
+    state Search
       unless
         if 'OnBallSignal do let Speed= 0; tel restart Kick;
-        if 'StopSignal do let Speed= 0; tel restart Stop;
       let
       tel
+      until
+        if _kicks #13 = 0 do let tel restart Finish;
 
     state Free
       unless
-        if 'StopSignal #6 = false do let _kicks= 0; tel restart Kicking;
+        if 'StopSignal #6 = false
+          do let
+            _kicks= #1 if Counting #8 = 5 #1 or Counting #9 = 2 then (2) else (1);
+          tel restart Search;
+      let
+      tel
+
+    state Release
+      unless
+        if 'StopSignal #7 = false do let Speed= 0; tel restart Init;
+      let
+      tel
+
+    state Finish
+      unless
+        if 'StopSignal do let Speed= 20; tel restart Release;
       let
       tel
   returns ..;
   emit 'StopSignal if _L35;
-  _L22= KickMoveBackward;
-  emit 'KickMoveBackwardSignal if _L22;
-  _L23= ArmSpeed;
-  ArmSpeedValue= _L23;
-  _L25= KickMoveFinished;
-  emit 'KickMoveFinishedSignal if _L25;
   SpeedValue= _L26;
   _L26= Speed;
   _L27= Counting;
   CountValue= _L27;
-  _L32= KickCountValue;
-  emit 'KickingFinishedSignal if _L44;
   _L35= Stop;
-  _L38= _kicks;
-  _L44= _L38 #1 >= _L32;
 tel
 
 
@@ -4922,5 +4888,5 @@ end;
 
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** -
-** Generation date: 2017-09-26T15:12:52
+** Generation date: 2017-09-26T16:09:25
 *************************************************************$ */

@@ -3,6 +3,7 @@
 #include "kernel_id.h"
 #include "c/ecrobot_interface.h"
 #include "KCG/StateMachine.h"
+#include "KCG/kcg_types.h"
 
 
 /* 
@@ -142,8 +143,7 @@ TASK(OSEK_Task_Background)
 		
 		display_goto_xy(0, 5);
 		display_string("Kicks: ");
-		display_int(input.KickCountValue, 7);
-		//display_int(result.Output3, 7);
+		//display_int(input.KickCountValue, 7);
 		
 		ecrobot_set_motor_speed(NXT_PORT_A, result.SpeedValue);
 
@@ -155,47 +155,29 @@ TASK(OSEK_Task_Background)
 			lastCount = result.CountValue;
 			ecrobot_sound_tone(500, 250, 100);
 		}
-
 		
-		if (result.ArmSpeedValue == 0) 
-		{
-			input.KickMoveFinished = kcg_false;
-			input.KickMoveBackward = kcg_false;
-			armcount = 0;
-		}
+		//ecrobot_set_motor_speed(NXT_PORT_B, result.ArmSpeedValue);
 		
-		if (result.ArmSpeedValue > 0) 
-		{
-			armcount++;
-			if (armcount >= 10) 
-			{
-				input.KickMoveBackward = kcg_true;
-			} 
-		} 
-		
-		if (result.ArmSpeedValue < 0) 
-		{
-			armcount--;
-			if (armcount <= 0) 
-			{
-				input.KickMoveBackward = kcg_false;
-				input.KickMoveFinished = kcg_true;
-			}
-		}
-		
-		ecrobot_set_motor_speed(NXT_PORT_B, result.ArmSpeedValue);
-		
-		if (result.SpeedValue < 0 && input.Stop) 
-		{
-			ecrobot_sound_tone(1000, 250, 100);
-			
-			if (result.CountValue == 2 || result.CountValue == 5) {
-				input.KickCountValue = 2;
-			} 
-			else 
-			{
-				input.KickCountValue = 1;
-			}
+		switch (result.RobotTar_state_nxt) {
+			case SSM_st_Free_RobotTar: 
+				ecrobot_sound_tone(1000, 250, 100);
+				break;
+			case SSM_st_Search_RobotTar:
+				break;
+			case SSM_st_Kick_RobotTar:
+				for (int i = 0; i < size; i++) 
+				{
+					values[i] = 10;
+				}
+				ecrobot_set_motor_speed(NXT_PORT_B, 80);
+				systick_wait_ms(400);
+				ecrobot_set_motor_speed(NXT_PORT_B, -80);
+				systick_wait_ms(400);
+				ecrobot_set_motor_speed(NXT_PORT_B, 0);
+				//systick_wait_ms(900);
+				break;
+			default:
+				break;
 		}
 		
 		/* wait for sone_int_value msec */

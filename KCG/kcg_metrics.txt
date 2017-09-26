@@ -1,17 +1,17 @@
 $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-26T15:13:06
+** Generation date: 2017-09-26T16:09:39
 *************************************************************$
 Data structures
   Structures
-    Max members in a single structure: 12
+    Max members in a single structure: 8
   Arrays
     Max number of dimensions for an array: 0
     Maximum size for a dimension: 0
   Enumeration
-    Max of enum constants in a single enumeration: 7
+    Max of enum constants in a single enumeration: 9
 Control structures
-  Max numbers of case labels in a switch: 5
+  Max numbers of case labels in a switch: 7
   Max number of nesting levels in compound statement: 3
 Program size
   Functions
@@ -25,5 +25,5 @@ Program size
     Max number of extern identifiers in one translation unit: 3
 $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** kcg_metrics.txt
-** Generation date: 2017-09-26T15:13:06
+** Generation date: 2017-09-26T16:09:39
 *************************************************************$
