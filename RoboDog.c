@@ -78,8 +78,6 @@ TASK(OSEK_Task_Background)
 	/* Reset StateMachine */
 	StateMachine_reset(&result);
 
-	/* Init LightSensor, also mandatory */		
-	//ecrobot_set_light_sensor_inactive(NXT_PORT_S1);
 	ecrobot_init_sonar_sensor(NXT_PORT_S2);
 	ecrobot_set_light_sensor_active(NXT_PORT_S3);
 	
@@ -94,33 +92,27 @@ TASK(OSEK_Task_Background)
 	
 	int index = 0;
 	
-	int armcount = 0;
-	
-	kcg_bool isCounting = kcg_true;
-	
 	while(1)
 	{
-		//input.ColorSenser = ecrobot_get_sonar_sensor(NXT_PORT_S2);
-		//U16 light = ecrobot_get_light_sensor(NXT_PORT_S1);
+		/*
+		 * INPUTS
+		 */
 		S32 sonar = ecrobot_get_sonar_sensor(NXT_PORT_S2);
+		// add value to ring buffer
 		addValue(values, index, sonar);
+		index = (index + 1) % size; 
 		
 		input.AverageSonar = average(values, size);
 		input.Start = ecrobot_get_touch_sensor(NXT_PORT_S1);
 		int colorSensor = ecrobot_get_light_sensor(NXT_PORT_S3);
 		input.Stop = colorSensor > 570;
 		
-		if (input.Stop) 
-		{
-			ecrobot_sound_tone(100, 250, 100);
-		}
-		
-		
-		/* this function computes next step, returns current outputs */
+		/* PROCESSING */
 		StateMachine(&input, &result);
 		
-		index = (index + 1) % size;
-		
+		/*
+		 * OUTPUTS
+		 */
 		display_clear(0);
 		display_goto_xy(0, 0);
 		display_string("Sonar: ");
@@ -132,31 +124,27 @@ TASK(OSEK_Task_Background)
 		
 		display_goto_xy(0, 2);
 		display_string("Speed: ");
-		display_int(result.SpeedValue / 4, 7);
+		display_int(result.SpeedValue, 7);
 		
 		display_goto_xy(0, 3);
 		display_string("Color: ");
 		display_int(colorSensor, 7);
 		
-		display_goto_xy(0, 4);
-		display_string("Stop: ");
-		
-		display_goto_xy(0, 5);
-		display_string("Kicks: ");
-		//display_int(input.KickCountValue, 7);
-		
-		ecrobot_set_motor_speed(NXT_PORT_A, result.SpeedValue);
-
 		display_update();
-		
-		// Pieper!
+				
+		// Pieper
+		if (input.Stop) 
+		{
+			ecrobot_sound_tone(100, 250, 100);
+		}
+
 		if (lastCount != result.CountValue) 
 		{
 			lastCount = result.CountValue;
 			ecrobot_sound_tone(500, 250, 100);
 		}
 		
-		//ecrobot_set_motor_speed(NXT_PORT_B, result.ArmSpeedValue);
+		ecrobot_set_motor_speed(NXT_PORT_A, result.SpeedValue);
 		
 		switch (result.RobotTar_state_nxt) {
 			case SSM_st_Free_RobotTar: 
@@ -165,16 +153,18 @@ TASK(OSEK_Task_Background)
 			case SSM_st_Search_RobotTar:
 				break;
 			case SSM_st_Kick_RobotTar:
+				// reset ultrasonic data
 				for (int i = 0; i < size; i++) 
 				{
-					values[i] = 10;
+					values[i] = 10; 
 				}
+				
+				// KICK
 				ecrobot_set_motor_speed(NXT_PORT_B, 80);
 				systick_wait_ms(400);
 				ecrobot_set_motor_speed(NXT_PORT_B, -80);
 				systick_wait_ms(400);
 				ecrobot_set_motor_speed(NXT_PORT_B, 0);
-				//systick_wait_ms(900);
 				break;
 			default:
 				break;
