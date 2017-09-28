@@ -1,6 +1,6 @@
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-26T16:09:39
+** Generation date: 2017-09-28T15:51:45
 *************************************************************$ */
 
 #include "kcg_consts.h"
@@ -20,6 +20,8 @@ void StateMachine(inC_StateMachine *inC, outC_StateMachine *outC)
   kcg_bool RobotTar_reset_nxt_partial;
   /* RobotTar:Search: */
   kcg_bool Search_weakb_clock_RobotTar;
+  /* RobotTar:Search:<2> */
+  kcg_bool tr_2_clock_Search_RobotTar;
   /* RobotTar:, RobotTar:Free:<1> */
   kcg_bool tr_1_clock_Free_RobotTar;
   /* RobotTar:, RobotTar:Release:<1> */
@@ -37,8 +39,6 @@ void StateMachine(inC_StateMachine *inC, outC_StateMachine *outC)
   /* @2/IRIO_Output/, @2/_L10/, OnBallSignal/, _L14/ */
   kcg_bool _L14;
 
-  _L14 = (kcg_lit_int16(256) > inC->AverageSonar) & (inC->AverageSonar >=
-      kcg_lit_int16(16));
   _L9 = (kcg_lit_int16(15) >= inC->AverageSonar) & (inC->AverageSonar >
       kcg_lit_int16(0));
   /* RobotTar: */
@@ -79,10 +79,10 @@ void StateMachine(inC_StateMachine *inC, outC_StateMachine *outC)
       }
       break;
     case SSM_st_Search_RobotTar :
-      RobotTar_reset_act = _L14;
-      if (_L14) {
-        RobotTar_state_act = SSM_st_Kick_RobotTar;
-        RobotTar_fired_strong = SSM_TR_Search_Kick_1_Search_RobotTar;
+      RobotTar_reset_act = inC->Stop;
+      if (inC->Stop) {
+        RobotTar_state_act = SSM_st_Release_RobotTar;
+        RobotTar_fired_strong = SSM_TR_Search_Release_1_Search_RobotTar;
       }
       else {
         RobotTar_state_act = SSM_st_Search_RobotTar;
@@ -120,6 +120,8 @@ void StateMachine(inC_StateMachine *inC, outC_StateMachine *outC)
       /* this default branch is unreachable */
       break;
   }
+  _L14 = (kcg_lit_int16(256) > inC->AverageSonar) & (inC->AverageSonar >=
+      kcg_lit_int16(16));
   /* RobotTar: */
   switch (RobotTar_state_act) {
     case SSM_st_Finish_RobotTar :
@@ -133,6 +135,11 @@ void StateMachine(inC_StateMachine *inC, outC_StateMachine *outC)
       break;
     case SSM_st_Search_RobotTar :
       Search_weakb_clock_RobotTar = RobotTar_fired_strong != SSM_TR_no_trans_RobotTar;
+      if (Search_weakb_clock_RobotTar) {
+      }
+      else {
+        tr_2_clock_Search_RobotTar = _L14;
+      }
       outC->CountValue = outC->Counting;
       break;
     case SSM_st_Kick_RobotTar :
@@ -246,13 +253,16 @@ void StateMachine(inC_StateMachine *inC, outC_StateMachine *outC)
         else {
           outC->_kicks = kcg_lit_int16(1);
         }
+        Speed = kcg_lit_int16(-25);
       }
-      Speed = outC->Speed;
+      else {
+        Speed = outC->Speed;
+      }
       break;
     case SSM_st_Search_RobotTar :
       /* RobotTar:Search:<1> */
-      if (_L14) {
-        Speed = kcg_lit_int16(0);
+      if (inC->Stop) {
+        Speed = kcg_lit_int16(20);
       }
       else {
         Speed = outC->Speed;
@@ -262,7 +272,7 @@ void StateMachine(inC_StateMachine *inC, outC_StateMachine *outC)
       /* RobotTar:Kick:<1> */
       if (_L9) {
         outC->_kicks = outC->_kicks - kcg_lit_int16(1);
-        Speed = kcg_lit_int16(-20);
+        Speed = kcg_lit_int16(-25);
       }
       else {
         Speed = outC->Speed;
@@ -271,7 +281,7 @@ void StateMachine(inC_StateMachine *inC, outC_StateMachine *outC)
     case SSM_st_Init_RobotTar :
       /* RobotTar:Init:<1> */
       if (inC->Start) {
-        Speed = kcg_lit_int16(20);
+        Speed = kcg_lit_int16(25);
       }
       else {
         Speed = outC->Speed;
@@ -302,14 +312,26 @@ void StateMachine(inC_StateMachine *inC, outC_StateMachine *outC)
       /* RobotTar:Search: */
       if (Search_weakb_clock_RobotTar) {
         outC->RobotTar_state_nxt = SSM_st_Search_RobotTar;
-      }
-      else if (outC->_kicks == kcg_lit_int16(0)) {
-        outC->RobotTar_state_nxt = SSM_st_Finish_RobotTar;
+        outC->SpeedValue = Speed;
       }
       else {
-        outC->RobotTar_state_nxt = SSM_st_Search_RobotTar;
+        if (_L14) {
+          outC->RobotTar_state_nxt = SSM_st_Kick_RobotTar;
+        }
+        else if (outC->_kicks == kcg_lit_int16(0)) {
+          outC->RobotTar_state_nxt = SSM_st_Finish_RobotTar;
+        }
+        else {
+          outC->RobotTar_state_nxt = SSM_st_Search_RobotTar;
+        }
+        /* RobotTar:Search:<2> */
+        if (tr_2_clock_Search_RobotTar) {
+          outC->SpeedValue = kcg_lit_int16(0);
+        }
+        else {
+          outC->SpeedValue = Speed;
+        }
       }
-      outC->SpeedValue = Speed;
       break;
     case SSM_st_Kick_RobotTar :
       outC->RobotTar_state_nxt = SSM_st_Kick_RobotTar;
@@ -384,6 +406,6 @@ void StateMachine_reset(outC_StateMachine *outC)
 
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** StateMachine.c
-** Generation date: 2017-09-26T16:09:39
+** Generation date: 2017-09-28T15:51:45
 *************************************************************$ */
 

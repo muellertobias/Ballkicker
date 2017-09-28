@@ -1,6 +1,6 @@
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-26T16:09:39
+** Generation date: 2017-09-28T15:51:45
 *************************************************************$ */
 #ifndef _StateMachine_H_
 #define _StateMachine_H_
@@ -59,6 +59,6 @@ extern void StateMachine_init(outC_StateMachine *outC);
 #endif /* _StateMachine_H_ */
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** StateMachine.h
-** Generation date: 2017-09-26T16:09:39
+** Generation date: 2017-09-28T15:51:45
 *************************************************************$ */
 

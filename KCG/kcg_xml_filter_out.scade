@@ -1,6 +1,6 @@
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-26T16:09:25
+** Generation date: 2017-09-28T15:51:40
 *************************************************************$ */
 
 /* xscade source: D:/Development/Scadet/RobotTar/Operator1.xscade */
@@ -61,30 +61,32 @@ let
 
     initial state Init
       unless
-        if 'StartSignal do let Speed= 20; tel restart Count;
+        if 'StartSignal do let Speed= 25; tel restart Count;
       let
       tel
 
     state Kick
       unless
         if 'OffBallSignal
-          do let Speed= - 20; _kicks= last '_kicks #1 - 1; tel restart Search;
+          do let Speed= - 25; _kicks= last '_kicks #4 - 1; tel restart Search;
       let
       tel
 
     state Search
       unless
-        if 'OnBallSignal do let Speed= 0; tel restart Kick;
+        if 'StopSignal do let Speed= 20; tel restart Release;
       let
       tel
       until
-        if _kicks #13 = 0 do let tel restart Finish;
+        if 'OnBallSignal do let Speed= 0; tel restart Kick;
+        if _kicks #19 = 0 do let tel restart Finish;
 
     state Free
       unless
         if 'StopSignal #6 = false
           do let
-            _kicks= #1 if Counting #8 = 5 #1 or Counting #9 = 2 then (2) else (1);
+            _kicks= #3 if Counting #16 = 5 #3 or Counting #17 = 2 then (2) else (1);
+            Speed= - 25;
           tel restart Search;
       let
       tel
@@ -4888,5 +4890,5 @@ end;
 
 /* $********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** -
-** Generation date: 2017-09-26T16:09:25
+** Generation date: 2017-09-28T15:51:40
 *************************************************************$ */

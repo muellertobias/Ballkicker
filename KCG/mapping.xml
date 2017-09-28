@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--$********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** Command: kcg66.exe -config D:/Development/Scadet/RobotTar/KCG/config.txt
-** Generation date: 2017-09-26T16:09:39
+** Generation date: 2017-09-28T15:51:45
 *************************************************************$-->
 <mapping>
   <config>
@@ -82,14 +82,14 @@
       <signal id="21" name="OffBallSignal"/>
       <signal id="22" name="StartSignal"/>
       <signal id="23" name="StopSignal"/>
-      <instance id="24" name="1" op="84" expanded="true">
+      <instance id="24" name="1" op="86" expanded="true">
         <input id="25" name="IROI_Input" clock="false" type="4"/>
         <input id="26" name="A" clock="false" type="4"/>
         <input id="27" name="B" clock="false" type="4"/>
         <output id="28" name="IROI_Output" clock="false" type="1"/>
         <assume id="29" name="A1"/>
       </instance>
-      <instance id="30" name="1" op="86" expanded="true">
+      <instance id="30" name="1" op="88" expanded="true">
         <input id="31" name="IRIO_Input" clock="false" type="4"/>
         <input id="32" name="A" clock="false" type="4"/>
         <input id="33" name="B" clock="false" type="4"/>
@@ -117,7 +117,7 @@
             </state>
           </automaton>
           <fork id="49" name="1" kind="weak">
-            <transition id="50" dest="63"/>
+            <transition id="50" dest="65"/>
           </fork>
         </state>
         <state id="51" name="Init" initial="true" final="false" default="false">
@@ -133,261 +133,266 @@
         </state>
         <state id="58" name="Search" initial="false" final="false" default="false">
           <fork id="59" name="2" kind="weak">
-            <transition id="60" dest="69"/>
+            <transition id="60" dest="54"/>
           </fork>
-          <fork id="61" name="1" kind="strong">
-            <transition id="62" dest="54"/>
+          <fork id="61" name="3" kind="weak">
+            <transition id="62" dest="71"/>
           </fork>
-        </state>
-        <state id="63" name="Free" initial="false" final="false" default="false">
-          <fork id="64" name="1" kind="strong">
-            <transition id="65" dest="58"/>
+          <fork id="63" name="1" kind="strong">
+            <transition id="64" dest="68"/>
           </fork>
         </state>
-        <state id="66" name="Release" initial="false" final="false" default="false">
-          <fork id="67" name="1" kind="strong">
-            <transition id="68" dest="51"/>
+        <state id="65" name="Free" initial="false" final="false" default="false">
+          <fork id="66" name="1" kind="strong">
+            <transition id="67" dest="58"/>
           </fork>
         </state>
-        <state id="69" name="Finish" initial="false" final="false" default="false">
-          <fork id="70" name="1" kind="strong">
-            <transition id="71" dest="66"/>
+        <state id="68" name="Release" initial="false" final="false" default="false">
+          <fork id="69" name="1" kind="strong">
+            <transition id="70" dest="51"/>
+          </fork>
+        </state>
+        <state id="71" name="Finish" initial="false" final="false" default="false">
+          <fork id="72" name="1" kind="strong">
+            <transition id="73" dest="68"/>
           </fork>
         </state>
       </automaton>
     </operator>
-    <package id="72" name="digital"/>
-    <package id="73" name="truthtables">
-      <enum id="74" name="TruthTableValues">
-        <value id="75" name="T" default="false"/>
-        <value id="76" name="F" default="false"/>
-        <value id="77" name="X" default="false"/>
+    <package id="74" name="digital"/>
+    <package id="75" name="truthtables">
+      <enum id="76" name="TruthTableValues">
+        <value id="77" name="T" default="false"/>
+        <value id="78" name="F" default="false"/>
+        <value id="79" name="X" default="false"/>
       </enum>
     </package>
-    <package id="78" name="linear"/>
-    <package id="79" name="filters"/>
-    <package id="80" name="vect"/>
-    <package id="81" name="math">
-      <operator id="82" name="InRangeInOut" imported="false" root="false" expanded="true"/>
-      <operator id="83" name="InRangeOutIn" imported="false" root="false" expanded="true"/>
-      <mono id="84" src="83">
-        <typeVar id="85" name="T" type="4"/>
-      </mono>
-      <mono id="86" src="82">
+    <package id="80" name="linear"/>
+    <package id="81" name="filters"/>
+    <package id="82" name="vect"/>
+    <package id="83" name="math">
+      <operator id="84" name="InRangeInOut" imported="false" root="false" expanded="true"/>
+      <operator id="85" name="InRangeOutIn" imported="false" root="false" expanded="true"/>
+      <mono id="86" src="85">
         <typeVar id="87" name="T" type="4"/>
       </mono>
+      <mono id="88" src="84">
+        <typeVar id="89" name="T" type="4"/>
+      </mono>
     </package>
-    <package id="88" name="mathext">
-      <package id="89" name="mathextimpl"/>
+    <package id="90" name="mathext">
+      <package id="91" name="mathextimpl"/>
     </package>
-    <package id="90" name="pwlinear"/>
-    <package id="91" name="lut"/>
-    <package id="92" name="verif"/>
+    <package id="92" name="pwlinear"/>
+    <package id="93" name="lut"/>
+    <package id="94" name="verif"/>
   </model>
   <generated>
     <c>
-      <file id="93" name="StateMachine.h">
-        <function id="94" name="StateMachine_init">
-          <parameter id="95" name="outC" type="101" pointer="true"/>
+      <file id="95" name="StateMachine.h">
+        <function id="96" name="StateMachine_init">
+          <parameter id="97" name="outC" type="103" pointer="true"/>
         </function>
-        <function id="96" name="StateMachine_reset">
-          <parameter id="97" name="outC" type="101" pointer="true"/>
+        <function id="98" name="StateMachine_reset">
+          <parameter id="99" name="outC" type="103" pointer="true"/>
         </function>
-        <function id="98" name="StateMachine">
-          <parameter id="99" name="inC" type="110" pointer="true"/>
-          <parameter id="100" name="outC" type="101" pointer="true"/>
+        <function id="100" name="StateMachine">
+          <parameter id="101" name="inC" type="112" pointer="true"/>
+          <parameter id="102" name="outC" type="103" pointer="true"/>
         </function>
-        <struct id="101" name="outC_StateMachine">
-          <field id="102" name="CountValue" type="175" pointer="false"/>
-          <field id="103" name="SpeedValue" type="170" pointer="false"/>
-          <field id="104" name="init" type="180" pointer="false"/>
-          <field id="105" name="CountSM_state_nxt_Count_RobotTar" type="115" pointer="false"/>
-          <field id="106" name="RobotTar_state_nxt" type="124" pointer="false"/>
-          <field id="107" name="Counting" type="175" pointer="false"/>
-          <field id="108" name="Speed" type="170" pointer="false"/>
-          <field id="109" name="_kicks" type="170" pointer="false"/>
+        <struct id="103" name="outC_StateMachine">
+          <field id="104" name="CountValue" type="178" pointer="false"/>
+          <field id="105" name="SpeedValue" type="173" pointer="false"/>
+          <field id="106" name="init" type="183" pointer="false"/>
+          <field id="107" name="CountSM_state_nxt_Count_RobotTar" type="117" pointer="false"/>
+          <field id="108" name="RobotTar_state_nxt" type="126" pointer="false"/>
+          <field id="109" name="Counting" type="178" pointer="false"/>
+          <field id="110" name="Speed" type="173" pointer="false"/>
+          <field id="111" name="_kicks" type="173" pointer="false"/>
         </struct>
-        <struct id="110" name="inC_StateMachine">
-          <field id="111" name="AverageSonar" type="170" pointer="false"/>
-          <field id="112" name="Start" type="180" pointer="false"/>
-          <field id="113" name="Stop" type="180" pointer="false"/>
+        <struct id="112" name="inC_StateMachine">
+          <field id="113" name="AverageSonar" type="173" pointer="false"/>
+          <field id="114" name="Start" type="183" pointer="false"/>
+          <field id="115" name="Stop" type="183" pointer="false"/>
         </struct>
       </file>
-      <file id="114" name="kcg_types.h">
-        <enum id="115" name="SSM_ST_CountSM_Count_RobotTar" tagName="kcg_tag_SSM_ST_CountSM_Count_RobotTar">
-          <value id="116" name="SSM_st_Wait_CountSM_Count_RobotTar"/>
-          <value id="117" name="SSM_st_Count_CountSM_Count_RobotTar"/>
-          <value id="118" name="SSM_st_Init_CountSM_Count_RobotTar"/>
+      <file id="116" name="kcg_types.h">
+        <enum id="117" name="SSM_ST_CountSM_Count_RobotTar" tagName="kcg_tag_SSM_ST_CountSM_Count_RobotTar">
+          <value id="118" name="SSM_st_Wait_CountSM_Count_RobotTar"/>
+          <value id="119" name="SSM_st_Count_CountSM_Count_RobotTar"/>
+          <value id="120" name="SSM_st_Init_CountSM_Count_RobotTar"/>
         </enum>
-        <enum id="119" name="SSM_TR_CountSM_Count_RobotTar" tagName="kcg_tag_SSM_TR_CountSM_Count_RobotTar">
-          <value id="120" name="SSM_TR_no_trans_CountSM_Count_RobotTar"/>
-          <value id="121" name="SSM_TR_Wait_Count_1_Wait_CountSM_Count_RobotTar"/>
-          <value id="122" name="SSM_TR_Count_Wait_1_Count_CountSM_Count_RobotTar"/>
-          <value id="123" name="SSM_TR_Init_Wait_1_Init_CountSM_Count_RobotTar"/>
+        <enum id="121" name="SSM_TR_CountSM_Count_RobotTar" tagName="kcg_tag_SSM_TR_CountSM_Count_RobotTar">
+          <value id="122" name="SSM_TR_no_trans_CountSM_Count_RobotTar"/>
+          <value id="123" name="SSM_TR_Wait_Count_1_Wait_CountSM_Count_RobotTar"/>
+          <value id="124" name="SSM_TR_Count_Wait_1_Count_CountSM_Count_RobotTar"/>
+          <value id="125" name="SSM_TR_Init_Wait_1_Init_CountSM_Count_RobotTar"/>
         </enum>
-        <enum id="124" name="SSM_ST_RobotTar" tagName="kcg_tag_SSM_ST_RobotTar">
-          <value id="125" name="SSM_st_Count_RobotTar"/>
-          <value id="126" name="SSM_st_Init_RobotTar"/>
-          <value id="127" name="SSM_st_Kick_RobotTar"/>
-          <value id="128" name="SSM_st_Search_RobotTar"/>
-          <value id="129" name="SSM_st_Free_RobotTar"/>
-          <value id="130" name="SSM_st_Release_RobotTar"/>
-          <value id="131" name="SSM_st_Finish_RobotTar"/>
+        <enum id="126" name="SSM_ST_RobotTar" tagName="kcg_tag_SSM_ST_RobotTar">
+          <value id="127" name="SSM_st_Count_RobotTar"/>
+          <value id="128" name="SSM_st_Init_RobotTar"/>
+          <value id="129" name="SSM_st_Kick_RobotTar"/>
+          <value id="130" name="SSM_st_Search_RobotTar"/>
+          <value id="131" name="SSM_st_Free_RobotTar"/>
+          <value id="132" name="SSM_st_Release_RobotTar"/>
+          <value id="133" name="SSM_st_Finish_RobotTar"/>
         </enum>
-        <enum id="132" name="SSM_TR_RobotTar" tagName="kcg_tag_SSM_TR_RobotTar">
-          <value id="133" name="SSM_TR_no_trans_RobotTar"/>
-          <value id="134" name="SSM_TR_Count_Free_1_Count_RobotTar"/>
-          <value id="135" name="SSM_TR_Init_Count_1_Init_RobotTar"/>
-          <value id="136" name="SSM_TR_Kick_Search_1_Kick_RobotTar"/>
-          <value id="137" name="SSM_TR_Search_Kick_1_Search_RobotTar"/>
-          <value id="138" name="SSM_TR_Search_Finish_2_Search_RobotTar"/>
-          <value id="139" name="SSM_TR_Free_Search_1_Free_RobotTar"/>
-          <value id="140" name="SSM_TR_Release_Init_1_Release_RobotTar"/>
-          <value id="141" name="SSM_TR_Finish_Release_1_Finish_RobotTar"/>
+        <enum id="134" name="SSM_TR_RobotTar" tagName="kcg_tag_SSM_TR_RobotTar">
+          <value id="135" name="SSM_TR_no_trans_RobotTar"/>
+          <value id="136" name="SSM_TR_Count_Free_1_Count_RobotTar"/>
+          <value id="137" name="SSM_TR_Init_Count_1_Init_RobotTar"/>
+          <value id="138" name="SSM_TR_Kick_Search_1_Kick_RobotTar"/>
+          <value id="139" name="SSM_TR_Search_Release_1_Search_RobotTar"/>
+          <value id="140" name="SSM_TR_Search_Kick_2_Search_RobotTar"/>
+          <value id="141" name="SSM_TR_Search_Finish_3_Search_RobotTar"/>
+          <value id="142" name="SSM_TR_Free_Search_1_Free_RobotTar"/>
+          <value id="143" name="SSM_TR_Release_Init_1_Release_RobotTar"/>
+          <value id="144" name="SSM_TR_Finish_Release_1_Finish_RobotTar"/>
         </enum>
-        <enum id="142" name="TruthTableValues_truthtables" tagName="kcg_tag_TruthTableValues_truthtables">
-          <value id="143" name="T_truthtables"/>
-          <value id="144" name="F_truthtables"/>
-          <value id="145" name="X_truthtables"/>
+        <enum id="145" name="TruthTableValues_truthtables" tagName="kcg_tag_TruthTableValues_truthtables">
+          <value id="146" name="T_truthtables"/>
+          <value id="147" name="F_truthtables"/>
+          <value id="148" name="X_truthtables"/>
         </enum>
-        <macro id="146" name="kcg_assign_array"/>
-        <macro id="147" name="kcg_assign_struct"/>
-        <macro id="148" name="kcg_lnot_uint8"/>
-        <macro id="149" name="kcg_lnot_uint16"/>
-        <macro id="150" name="kcg_lnot_uint32"/>
-        <macro id="151" name="kcg_lnot_uint64"/>
-        <macro id="152" name="kcg_lsl_uint8"/>
-        <macro id="153" name="kcg_lsl_uint16"/>
-        <macro id="154" name="kcg_lsl_uint32"/>
-        <macro id="155" name="kcg_lsl_uint64"/>
-        <macro id="156" name="kcg_true"/>
-        <macro id="157" name="kcg_false"/>
-        <macro id="158" name="kcg_lit_int8"/>
-        <macro id="159" name="kcg_lit_int16"/>
-        <macro id="160" name="kcg_lit_int32"/>
-        <macro id="161" name="kcg_lit_int64"/>
-        <macro id="162" name="kcg_lit_uint8"/>
-        <macro id="163" name="kcg_lit_uint16"/>
-        <macro id="164" name="kcg_lit_uint32"/>
-        <macro id="165" name="kcg_lit_uint64"/>
-        <macro id="166" name="kcg_lit_size"/>
-        <macro id="167" name="kcg_lit_float64"/>
-        <macro id="168" name="kcg_lit_float32"/>
-        <predefType id="169" name="kcg_int8"/>
-        <predefType id="170" name="kcg_int16"/>
-        <predefType id="171" name="kcg_int32"/>
-        <predefType id="172" name="kcg_int64"/>
-        <predefType id="173" name="kcg_uint8"/>
-        <predefType id="174" name="kcg_uint16"/>
-        <predefType id="175" name="kcg_uint32"/>
-        <predefType id="176" name="kcg_uint64"/>
-        <predefType id="177" name="kcg_size"/>
-        <predefType id="178" name="kcg_float64"/>
-        <predefType id="179" name="kcg_float32"/>
-        <predefType id="180" name="kcg_bool"/>
-        <predefType id="181" name="kcg_char"/>
-        <macro id="182" name="KCG_MAPW_CPY"/>
+        <macro id="149" name="kcg_assign_array"/>
+        <macro id="150" name="kcg_assign_struct"/>
+        <macro id="151" name="kcg_lnot_uint8"/>
+        <macro id="152" name="kcg_lnot_uint16"/>
+        <macro id="153" name="kcg_lnot_uint32"/>
+        <macro id="154" name="kcg_lnot_uint64"/>
+        <macro id="155" name="kcg_lsl_uint8"/>
+        <macro id="156" name="kcg_lsl_uint16"/>
+        <macro id="157" name="kcg_lsl_uint32"/>
+        <macro id="158" name="kcg_lsl_uint64"/>
+        <macro id="159" name="kcg_true"/>
+        <macro id="160" name="kcg_false"/>
+        <macro id="161" name="kcg_lit_int8"/>
+        <macro id="162" name="kcg_lit_int16"/>
+        <macro id="163" name="kcg_lit_int32"/>
+        <macro id="164" name="kcg_lit_int64"/>
+        <macro id="165" name="kcg_lit_uint8"/>
+        <macro id="166" name="kcg_lit_uint16"/>
+        <macro id="167" name="kcg_lit_uint32"/>
+        <macro id="168" name="kcg_lit_uint64"/>
+        <macro id="169" name="kcg_lit_size"/>
+        <macro id="170" name="kcg_lit_float64"/>
+        <macro id="171" name="kcg_lit_float32"/>
+        <predefType id="172" name="kcg_int8"/>
+        <predefType id="173" name="kcg_int16"/>
+        <predefType id="174" name="kcg_int32"/>
+        <predefType id="175" name="kcg_int64"/>
+        <predefType id="176" name="kcg_uint8"/>
+        <predefType id="177" name="kcg_uint16"/>
+        <predefType id="178" name="kcg_uint32"/>
+        <predefType id="179" name="kcg_uint64"/>
+        <predefType id="180" name="kcg_size"/>
+        <predefType id="181" name="kcg_float64"/>
+        <predefType id="182" name="kcg_float32"/>
+        <predefType id="183" name="kcg_bool"/>
+        <predefType id="184" name="kcg_char"/>
+        <macro id="185" name="KCG_MAPW_CPY"/>
       </file>
-      <file id="183" name="kcg_consts.h"/>
-      <file id="184" name="kcg_sensors.h"/>
+      <file id="186" name="kcg_consts.h"/>
+      <file id="187" name="kcg_sensors.h"/>
     </c>
-    <map srcId="178" dstId="167" role="wrapped-lit"/>
+    <map srcId="181" dstId="170" role="wrapped-lit"/>
+    <map srcId="182" dstId="171" role="wrapped-lit"/>
+    <map srcId="180" dstId="169" role="wrapped-lit"/>
     <map srcId="179" dstId="168" role="wrapped-lit"/>
+    <map srcId="179" dstId="154" role="wrapped-lnot"/>
+    <map srcId="179" dstId="158" role="wrapped-lsl"/>
+    <map srcId="178" dstId="167" role="wrapped-lit"/>
+    <map srcId="178" dstId="153" role="wrapped-lnot"/>
+    <map srcId="178" dstId="157" role="wrapped-lsl"/>
     <map srcId="177" dstId="166" role="wrapped-lit"/>
+    <map srcId="177" dstId="152" role="wrapped-lnot"/>
+    <map srcId="177" dstId="156" role="wrapped-lsl"/>
     <map srcId="176" dstId="165" role="wrapped-lit"/>
     <map srcId="176" dstId="151" role="wrapped-lnot"/>
     <map srcId="176" dstId="155" role="wrapped-lsl"/>
     <map srcId="175" dstId="164" role="wrapped-lit"/>
-    <map srcId="175" dstId="150" role="wrapped-lnot"/>
-    <map srcId="175" dstId="154" role="wrapped-lsl"/>
     <map srcId="174" dstId="163" role="wrapped-lit"/>
-    <map srcId="174" dstId="149" role="wrapped-lnot"/>
-    <map srcId="174" dstId="153" role="wrapped-lsl"/>
     <map srcId="173" dstId="162" role="wrapped-lit"/>
-    <map srcId="173" dstId="148" role="wrapped-lnot"/>
-    <map srcId="173" dstId="152" role="wrapped-lsl"/>
     <map srcId="172" dstId="161" role="wrapped-lit"/>
-    <map srcId="171" dstId="160" role="wrapped-lit"/>
-    <map srcId="170" dstId="159" role="wrapped-lit"/>
-    <map srcId="169" dstId="158" role="wrapped-lit"/>
   </generated>
-  <map modelId="77" generatedId="145"/>
-  <map modelId="76" generatedId="144"/>
-  <map modelId="75" generatedId="143"/>
-  <map modelId="60" generatedId="138"/>
-  <map modelId="50" generatedId="134"/>
-  <map modelId="48" generatedId="123"/>
-  <map modelId="44" generatedId="122"/>
-  <map modelId="41" generatedId="121"/>
-  <map modelId="38" generatedId="120" role="autom-no-trans-enum"/>
-  <map modelId="42" generatedId="117"/>
-  <map modelId="39" generatedId="116"/>
-  <map modelId="46" generatedId="118"/>
-  <map modelId="53" generatedId="135"/>
-  <map modelId="37" generatedId="125"/>
-  <map modelId="56" generatedId="136"/>
-  <map modelId="62" generatedId="137"/>
-  <map modelId="54" generatedId="127"/>
-  <map modelId="63" generatedId="129"/>
-  <map modelId="65" generatedId="139"/>
-  <map modelId="58" generatedId="128"/>
-  <map modelId="68" generatedId="140"/>
-  <map modelId="51" generatedId="126"/>
-  <map modelId="36" generatedId="133" role="autom-no-trans-enum"/>
-  <map modelId="69" generatedId="131"/>
-  <map modelId="71" generatedId="141"/>
-  <map modelId="66" generatedId="130"/>
-  <map modelId="14" generatedId="95" role="context-parameter"/>
-  <map modelId="14" generatedId="94" role="init-method"/>
+  <map modelId="79" generatedId="148"/>
+  <map modelId="78" generatedId="147"/>
+  <map modelId="77" generatedId="146"/>
+  <map modelId="62" generatedId="141"/>
+  <map modelId="60" generatedId="140"/>
+  <map modelId="50" generatedId="136"/>
+  <map modelId="48" generatedId="125"/>
+  <map modelId="44" generatedId="124"/>
+  <map modelId="41" generatedId="123"/>
+  <map modelId="38" generatedId="122" role="autom-no-trans-enum"/>
+  <map modelId="42" generatedId="119"/>
+  <map modelId="39" generatedId="118"/>
+  <map modelId="46" generatedId="120"/>
+  <map modelId="53" generatedId="137"/>
+  <map modelId="37" generatedId="127"/>
+  <map modelId="54" generatedId="129"/>
+  <map modelId="56" generatedId="138"/>
+  <map modelId="64" generatedId="139"/>
+  <map modelId="65" generatedId="131"/>
+  <map modelId="67" generatedId="142"/>
+  <map modelId="58" generatedId="130"/>
+  <map modelId="70" generatedId="143"/>
+  <map modelId="51" generatedId="128"/>
+  <map modelId="36" generatedId="135" role="autom-no-trans-enum"/>
+  <map modelId="71" generatedId="133"/>
+  <map modelId="73" generatedId="144"/>
+  <map modelId="68" generatedId="132"/>
   <map modelId="14" generatedId="97" role="context-parameter"/>
-  <map modelId="14" generatedId="96" role="reset-method"/>
-  <map modelId="14" generatedId="99" role="input-struct-parameter"/>
-  <map modelId="17" generatedId="113"/>
-  <map modelId="23" generatedId="113"/>
-  <map modelId="16" generatedId="112"/>
-  <map modelId="22" generatedId="112"/>
-  <map modelId="15" generatedId="111"/>
-  <map modelId="25" generatedId="111"/>
-  <map modelId="31" generatedId="111"/>
-  <map modelId="14" generatedId="110" role="input-struct-type"/>
-  <map modelId="14" generatedId="100" role="context-parameter"/>
+  <map modelId="14" generatedId="96" role="init-method"/>
+  <map modelId="14" generatedId="99" role="context-parameter"/>
+  <map modelId="14" generatedId="98" role="reset-method"/>
+  <map modelId="14" generatedId="101" role="input-struct-parameter"/>
+  <map modelId="17" generatedId="115"/>
+  <map modelId="23" generatedId="115"/>
+  <map modelId="16" generatedId="114"/>
+  <map modelId="22" generatedId="114"/>
+  <map modelId="15" generatedId="113"/>
+  <map modelId="25" generatedId="113"/>
+  <map modelId="31" generatedId="113"/>
+  <map modelId="14" generatedId="112" role="input-struct-type"/>
+  <map modelId="14" generatedId="102" role="context-parameter"/>
+  <map modelId="36" generatedId="111" role="memory"/>
+  <map modelId="54" generatedId="111" role="memory"/>
+  <map modelId="65" generatedId="111" role="memory"/>
+  <map modelId="57" generatedId="111" role="memory"/>
   <map modelId="36" generatedId="109" role="memory"/>
-  <map modelId="54" generatedId="109" role="memory"/>
-  <map modelId="63" generatedId="109" role="memory"/>
-  <map modelId="57" generatedId="109" role="memory"/>
-  <map modelId="36" generatedId="107" role="memory"/>
-  <map modelId="38" generatedId="107" role="memory"/>
-  <map modelId="42" generatedId="107" role="memory"/>
-  <map modelId="46" generatedId="107" role="memory"/>
-  <map modelId="45" generatedId="107" role="memory"/>
-  <map modelId="36" generatedId="106" role="autom-next-state"/>
-  <map modelId="38" generatedId="105" role="autom-next-state"/>
-  <map modelId="38" generatedId="104" role="init"/>
-  <map modelId="19" generatedId="103"/>
-  <map modelId="18" generatedId="102"/>
-  <map modelId="14" generatedId="101" role="context-type"/>
-  <map modelId="14" generatedId="93" role="interface-file"/>
-  <map modelId="14" generatedId="98" role="cycle-method"/>
-  <map modelId="74" generatedId="142"/>
-  <map modelId="36" generatedId="132" role="autom-transitions-type"/>
-  <map modelId="36" generatedId="124" role="autom-states-type"/>
-  <map modelId="38" generatedId="119" role="autom-transitions-type"/>
-  <map modelId="38" generatedId="115" role="autom-states-type"/>
-  <map modelId="2" generatedId="181"/>
-  <map modelId="1" generatedId="180"/>
-  <map modelId="12" generatedId="178"/>
-  <map modelId="11" generatedId="179"/>
-  <map modelId="13" generatedId="177"/>
-  <map modelId="10" generatedId="176"/>
-  <map modelId="9" generatedId="175"/>
-  <map modelId="8" generatedId="174"/>
-  <map modelId="7" generatedId="173"/>
-  <map modelId="6" generatedId="172"/>
-  <map modelId="5" generatedId="171"/>
-  <map modelId="4" generatedId="170"/>
-  <map modelId="3" generatedId="169"/>
+  <map modelId="38" generatedId="109" role="memory"/>
+  <map modelId="42" generatedId="109" role="memory"/>
+  <map modelId="46" generatedId="109" role="memory"/>
+  <map modelId="45" generatedId="109" role="memory"/>
+  <map modelId="36" generatedId="108" role="autom-next-state"/>
+  <map modelId="38" generatedId="107" role="autom-next-state"/>
+  <map modelId="38" generatedId="106" role="init"/>
+  <map modelId="19" generatedId="105"/>
+  <map modelId="18" generatedId="104"/>
+  <map modelId="14" generatedId="103" role="context-type"/>
+  <map modelId="14" generatedId="95" role="interface-file"/>
+  <map modelId="14" generatedId="100" role="cycle-method"/>
+  <map modelId="76" generatedId="145"/>
+  <map modelId="36" generatedId="134" role="autom-transitions-type"/>
+  <map modelId="36" generatedId="126" role="autom-states-type"/>
+  <map modelId="38" generatedId="121" role="autom-transitions-type"/>
+  <map modelId="38" generatedId="117" role="autom-states-type"/>
+  <map modelId="2" generatedId="184"/>
+  <map modelId="1" generatedId="183"/>
+  <map modelId="12" generatedId="181"/>
+  <map modelId="11" generatedId="182"/>
+  <map modelId="13" generatedId="180"/>
+  <map modelId="10" generatedId="179"/>
+  <map modelId="9" generatedId="178"/>
+  <map modelId="8" generatedId="177"/>
+  <map modelId="7" generatedId="176"/>
+  <map modelId="6" generatedId="175"/>
+  <map modelId="5" generatedId="174"/>
+  <map modelId="4" generatedId="173"/>
+  <map modelId="3" generatedId="172"/>
 </mapping>
 <!--$********** SCADE Suite KCG 32-bit 6.6 (build i15) ***********
 ** mapping.xml
-** Generation date: 2017-09-26T16:09:39
+** Generation date: 2017-09-28T15:51:45
 *************************************************************$-->

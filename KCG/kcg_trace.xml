@@ -107,11 +107,15 @@
         <State scadeName="Search" targetName="SSM_st_Search_RobotTar">
           <Fork priority="2">
             <Condition/>
-            <Transition kind="weak" scadeDest="Finish" targetName="SSM_TR_Search_Finish_2_Search_RobotTar"/>
+            <Transition kind="weak" scadeDest="Kick" targetName="SSM_TR_Search_Kick_2_Search_RobotTar"/>
+          </Fork>
+          <Fork priority="3">
+            <Condition/>
+            <Transition kind="weak" scadeDest="Finish" targetName="SSM_TR_Search_Finish_3_Search_RobotTar"/>
           </Fork>
           <Fork priority="1">
             <Condition/>
-            <Transition kind="strong" scadeDest="Kick" targetName="SSM_TR_Search_Kick_1_Search_RobotTar"/>
+            <Transition kind="strong" scadeDest="Release" targetName="SSM_TR_Search_Release_1_Search_RobotTar"/>
           </Fork>
         </State>
         <State scadeName="Free" targetName="SSM_st_Free_RobotTar">
